@@ -1,9 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home";
-import GoogleForm from "./pages/FinalGoogleForm";
+import NewGoogleForm from "./pages/NewGoogleForm";
+import FinalGoogleForm from "./pages/FinalGoogleForm";
 import GoogleFormUser from "./pages/GoogleFormUser";
 import GoogleFormReport from "./pages/GoogleFormReport";
+import GoogleFormList from "./pages/GoogleFormList";
 
 // import SignUp from "./pages/SignUp";
 
@@ -13,10 +15,11 @@ class Routes extends React.Component {
 			<Router>
 				<Switch>
 					<Route exact path="/" component={Home} />
-					<Route path="/form" component={GoogleForm} />
+					<Route path="/form" component={NewGoogleForm} />
 					{/* form/{uuid}형식으로  url을 만들 수 있음 */}
 					<Route path="/form/:uid" component={GoogleFormUser} />
 					<Route path="/report" component={GoogleFormReport} />
+					<Route path="/list" component={GoogleFormList} />
 				</Switch>
 			</Router>
 		);

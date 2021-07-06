@@ -21,13 +21,16 @@
 
 ### 7월 7일 (수)
 
-- GoogleFormUser.js 페이지 구성
+- 유저가 링크를 받아 폼을 작성할 수 있는 GoogleFormUser.js 페이지 구성
 
   1. FormUser UI 구성
   2. 새로고침 혹은 뒤로가기 이후에 초기화
   3. form 제출 기능 (데이터베이스 저장까지)
 
-- 유저가 작성한 GoogleForm을 볼 수 있는
+- 유저가 작성한 GoogleForm을 볼 수 있는 FinalGoogleForm.js 페이지 구성
+
+  1. GoogleFormUser와 구성은 동일하지만, input이 미리 채워져있다는 것이 다르다.
+  2.
 
 ## 기본 레이아웃 구성
 
