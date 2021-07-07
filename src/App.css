@@ -8,7 +8,7 @@
 
 #dropdown-item-button {
 	width: 8rem;
-	height: 2.25rem;
+	height: 2rem;
 	text-align: right;
 	display: flex;
 	justify-content: space-between;
@@ -48,4 +48,8 @@
 }
 .deleteBtn {
 	cursor: pointer;
+}
+
+.radioDeleteBtn {
+	margin-right: 1.75em;
 }

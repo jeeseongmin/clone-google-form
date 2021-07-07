@@ -4,6 +4,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import styled from "styled-components";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { v4 as uuidv4 } from "uuid";
 
 import {
 	Button,
@@ -25,11 +26,11 @@ import {
 	SubTitle,
 	Mid,
 	Bottom,
+	TextText,
 } from "../styles/Question";
 
 const TextQuestion = (props) => {
 	const question = props.question;
-	const key = props.key;
 	const updateQuestion = props.update;
 	const deleteQuestion = props.delete;
 
@@ -40,6 +41,7 @@ const TextQuestion = (props) => {
 	const [content, setContent] = useState({
 		title: "",
 		subtitle: "",
+		text: "",
 		questionType: "",
 		uuid: "",
 	});
@@ -57,6 +59,7 @@ const TextQuestion = (props) => {
 	};
 	const changeType = (after) => {
 		const cp = { ...content };
+		console.log(after);
 		cp["questionType"] = after;
 		setContent(cp);
 		updateQuestion("questionType", content.uuid, after);
@@ -69,8 +72,8 @@ const TextQuestion = (props) => {
 					<Top1>
 						<TextDiv>
 							<Title
-								placeholder="설문지 제목"
-								value={content.title}
+								placeholder="질문"
+								value={content.title || ""}
 								onChange={(e) => ChangeContent(e, "title")}
 							></Title>
 						</TextDiv>
@@ -93,12 +96,20 @@ const TextQuestion = (props) => {
 						</DropdownButton>
 					</Top1>
 					<SubTitle
-						placeholder="설문지 내용"
-						value={content.subtitle}
+						placeholder="설명"
+						value={content.subtitle || ""}
 						onChange={(e) => ChangeContent(e, "subtitle")}
 					></SubTitle>
 				</Top>
-				<Mid></Mid>
+				<Mid>
+					<TextDiv>
+						<TextText
+							placeholder="단답형 텍스트"
+							value={content.text || ""}
+							onChange={(e) => ChangeContent(e, "text")}
+						></TextText>
+					</TextDiv>
+				</Mid>
 				<Divider />
 				<Bottom>
 					<RiDeleteBinLine
@@ -120,4 +131,9 @@ const TextQuestion = (props) => {
 	);
 };
 
+// const areEqual = (prevProps, nextProps) => {
+// 	return prevProps.question.uuid === nextProps.question.uuid;
+// };
+
 export default TextQuestion;
+// export default React.memo(TextQuestion, areEqual);

@@ -22,7 +22,7 @@ const Submit = styled.div`
 	text-transform: uppercase;
 
 	cursor: pointer;
-	margin-right: 1rem;
+	margin-right: 2rem;
 `;
 
 const Header = styled.div`
@@ -66,7 +66,7 @@ const BtnBox = styled.div`
 	background-color: white;
 	display: flex;
 	flex-direction: row;
-	justify-content: flex-start;
+	justify-content: space-between;
 `;
 const Btn = styled.button`
 	width: 3rem;

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../App.css";
 import { RiDeleteBinLine } from "react-icons/ri";
-import styled from "styled-components";
+import { IoMdClose } from "react-icons/io";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { v4 as uuidv4 } from "uuid";
 
 import {
 	Button,
@@ -25,23 +26,33 @@ import {
 	SubTitle,
 	Mid,
 	Bottom,
+	RadioWrapper,
+	RadioBox,
+	Radio,
+	RadioText,
+	EmptyRadioText,
+	EmptyRadioBox,
+	EmptryRadio,
 } from "../styles/Question";
 
 const CheckboxQuestion = (props) => {
 	const question = props.question;
-	const key = props.key;
 	const updateQuestion = props.update;
 	const deleteQuestion = props.delete;
+	const [disabledRadio, setDisabledRadio] = useState(0);
+
+	const radioRef = useRef(null);
 
 	const [checked, setChecked] = useState(false);
 	const toggleChecked = () => {
 		setChecked((prev) => !prev);
 	};
 	const [content, setContent] = useState({
+		uuid: "",
 		title: "",
 		subtitle: "",
 		questionType: "",
-		uuid: "",
+		options: [],
 	});
 
 	useEffect(() => {
@@ -55,12 +66,38 @@ const CheckboxQuestion = (props) => {
 		setContent(cp);
 		updateQuestion(key, content.uuid, e.target.value);
 	};
+
 	const changeType = (after) => {
 		const cp = { ...content };
 		console.log(after);
 		cp["questionType"] = after;
 		setContent(cp);
 		updateQuestion("questionType", content.uuid, after);
+	};
+
+	const addOption = function (e) {
+		const cp = { ...content };
+		cp.options.push(createDefaultOption());
+		setContent(cp);
+		radioRef.current.focus();
+	};
+
+	const createDefaultOption = () => {
+		return { title: "", uuid: uuidv4() };
+	};
+
+	const deleteOption = function (uuid) {
+		const cp = { ...content };
+		const index = cp.options.findIndex((x) => x.uuid === uuid);
+		cp.options.splice(index, 1);
+		setContent(cp);
+	};
+
+	const editOption = function (e, id, type) {
+		const cp = { ...content };
+		const index = cp.options.findIndex((x) => x.uuid === id);
+		cp.options[index][type] = e.target.value;
+		setContent(cp);
 	};
 
 	return (
@@ -71,7 +108,7 @@ const CheckboxQuestion = (props) => {
 						<TextDiv>
 							<Title
 								placeholder="설문지 제목"
-								value={content.title}
+								value={content.title || ""}
 								onChange={(e) => ChangeContent(e, "title")}
 							></Title>
 						</TextDiv>
@@ -95,17 +132,79 @@ const CheckboxQuestion = (props) => {
 					</Top1>
 					<SubTitle
 						placeholder="설문지 내용"
-						value={content.subtitle}
+						value={content.subtitle || ""}
 						onChange={(e) => ChangeContent(e, "subtitle")}
 					></SubTitle>
 				</Top>
-				<Mid></Mid>
+				<Mid>
+					<RadioWrapper>
+						{content.options.map((element, index) => {
+							const id = element.uuid;
+							if (index + 1 !== content.options.length) {
+								return (
+									<RadioBox key={element.uuid}>
+										<Radio
+											type="checkbox"
+											name="checkbox"
+											checked={disabledRadio}
+											onChange={() => setDisabledRadio(0)}
+										/>
+										<RadioText
+											placeholder="설문지 내용"
+											value={element.title}
+											onChange={(e) => editOption(e, id, "title")}
+										></RadioText>
+										<IoMdClose
+											size={28}
+											className="radioDeleteBtn"
+											onClick={() => deleteOption(id)}
+										/>
+									</RadioBox>
+								);
+							} else {
+								return (
+									<RadioBox key={element.uuid}>
+										<Radio
+											type="checkbox"
+											name="checkbox"
+											ref={radioRef}
+											checked={disabledRadio}
+											onChange={() => setDisabledRadio(0)}
+										/>
+										<RadioText
+											placeholder="설문지 내용"
+											value={element.title}
+											onChange={(e) => editOption(e, id, "title")}
+										></RadioText>
+										<IoMdClose
+											size={28}
+											className="radioDeleteBtn"
+											onClick={() => deleteOption(id)}
+										/>
+									</RadioBox>
+								);
+							}
+						})}
+
+						<EmptyRadioBox>
+							<EmptryRadio
+								type="checkbox"
+								checked={disabledRadio}
+								onChange={() => setDisabledRadio(0)}
+							/>
+							<EmptyRadioText
+								placeholder="옵션 추가"
+								onClick={(e) => addOption(e)}
+							></EmptyRadioText>
+						</EmptyRadioBox>
+					</RadioWrapper>
+				</Mid>
 				<Divider />
 				<Bottom>
 					<RiDeleteBinLine
 						size={25}
 						className="deleteBtn"
-						onClick={() => deleteQuestion(content.uuid)}
+						onClick={() => deleteQuestion(question.uuid)}
 					/>
 					<Divider orientation="vertical" flexItem />
 					<div className="formGroup">

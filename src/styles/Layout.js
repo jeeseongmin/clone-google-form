@@ -14,6 +14,7 @@ const Layout = styled.div`
 	align-items: center;
 	justify-content: center;
 	/* background-color: #83c9e7; */
+	overflow-y: auto;
 `;
 
 const Container = styled.div`
