@@ -128,7 +128,7 @@ const NewGoogleForm = () => {
 			questions: questions,
 		};
 		try {
-			await db.collection("questions").add(payload);
+			await db.collection("questions").pushpushbaby(payload);
 			console.log("Complete make form.");
 			history.push("/");
 		} catch (error) {
