@@ -15,9 +15,9 @@ class Routes extends React.Component {
 			<Router>
 				<Switch>
 					<Route exact path="/" component={Home} />
-					<Route path="/form" component={NewGoogleForm} />
+					<Route exact path="/form" component={NewGoogleForm} />
 					{/* form/{uuid}형식으로  url을 만들 수 있음 */}
-					<Route path="/form/:uid" component={GoogleFormUser} />
+					<Route exact path="/form/:uuid" component={GoogleFormUser} />
 					<Route path="/report" component={GoogleFormReport} />
 					<Route path="/list" component={GoogleFormList} />
 				</Switch>

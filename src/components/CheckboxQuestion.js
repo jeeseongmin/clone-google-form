@@ -39,7 +39,7 @@ const CheckboxQuestion = (props) => {
 	const question = props.question;
 	const updateQuestion = props.update;
 	const deleteQuestion = props.delete;
-	const [disabledRadio, setDisabledRadio] = useState(0);
+	const [disabledCheckbox, setDisabledCheckbox] = useState(0);
 
 	const radioRef = useRef(null);
 
@@ -140,17 +140,18 @@ const CheckboxQuestion = (props) => {
 					<RadioWrapper>
 						{content.options.map((element, index) => {
 							const id = element.uuid;
+							const optionText = "옵션 " + (index + 1);
 							if (index + 1 !== content.options.length) {
 								return (
 									<RadioBox key={element.uuid}>
 										<Radio
 											type="checkbox"
 											name="checkbox"
-											checked={disabledRadio}
-											onChange={() => setDisabledRadio(0)}
+											checked={disabledCheckbox}
+											onChange={() => setDisabledCheckbox(0)}
 										/>
 										<RadioText
-											placeholder="설문지 내용"
+											placeholder={optionText}
 											value={element.title}
 											onChange={(e) => editOption(e, id, "title")}
 										></RadioText>
@@ -168,11 +169,11 @@ const CheckboxQuestion = (props) => {
 											type="checkbox"
 											name="checkbox"
 											ref={radioRef}
-											checked={disabledRadio}
-											onChange={() => setDisabledRadio(0)}
+											checked={disabledCheckbox}
+											onChange={() => setDisabledCheckbox(0)}
 										/>
 										<RadioText
-											placeholder="설문지 내용"
+											placeholder={optionText}
 											value={element.title}
 											onChange={(e) => editOption(e, id, "title")}
 										></RadioText>
@@ -189,8 +190,8 @@ const CheckboxQuestion = (props) => {
 						<EmptyRadioBox>
 							<EmptryRadio
 								type="checkbox"
-								checked={disabledRadio}
-								onChange={() => setDisabledRadio(0)}
+								checked={disabledCheckbox}
+								onChange={() => setDisabledCheckbox(0)}
 							/>
 							<EmptyRadioText
 								placeholder="옵션 추가"

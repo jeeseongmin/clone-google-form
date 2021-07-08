@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-
+import { db, firebase, firebaseApp } from "../firebase";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { Button } from "@material-ui/core";
-
-import { GrPowerReset } from "react-icons/gr";
-
 import {
+	Header,
+	QuestionTitle,
+	Submit,
+	FormContainer,
+	FormCenter,
 	BtnBox,
 	Btn,
 	FormBoxWrapper,
@@ -15,29 +15,40 @@ import {
 	DefaultTitle,
 	DefaultSubTitle,
 } from "../styles/Form";
+import { GrPowerReset } from "react-icons/gr";
+import { IoArrowBackOutline } from "react-icons/io5";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import { v4 as uuidv4 } from "uuid";
 import TextQuestion from "../components/TextQuestion";
 import CheckboxQuestion from "../components/CheckboxQuestion";
 import RadioQuestion from "../components/RadioQuestion";
-
-// import { firebaseApp } from "../../firebase";
-import { Layout, Container } from "../styles/Layout";
-import {
-	Header,
-	Title,
-	Submit,
-	FormContainer,
-	FormCenter,
-	// FormDefaultBox,
-} from "../styles/Form";
+import { Layout } from "../styles/Layout";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 const NewGoogleForm = () => {
+	const history = useHistory();
 	const [questions, setQuestions] = useState([]);
+	const [open, setOpen] = React.useState(false);
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
 	const [defaultValue, setDefaultValue] = useState({
 		title: "",
 		subtitle: "",
 	});
+
+	const goBack = function () {
+		history.push("/");
+	};
 
 	const reset = () => {
 		setQuestions([]);
@@ -53,21 +64,19 @@ const NewGoogleForm = () => {
 		setDefaultValue(cp);
 	};
 
-	const addQuestion = () => {
-		const cp = [...questions];
-		cp.push(createDefaultQuestion());
-		setQuestions(cp);
-	};
-
 	const createDefaultQuestion = () => {
 		return {
 			uuid: uuidv4(),
 			title: "",
 			text: "",
 			questionType: "text",
-			// questionType: "checkbox",
-			// questionType: "radio",
 		};
+	};
+
+	const addQuestion = () => {
+		const cp = [...questions];
+		cp.push(createDefaultQuestion());
+		setQuestions(cp);
 	};
 
 	const updateQuestion = (key, uuid, data) => {
@@ -104,34 +113,64 @@ const NewGoogleForm = () => {
 	const deleteQuestion = (uuid) => {
 		const cp = [...questions];
 		const index = cp.findIndex((x) => x.uuid === uuid);
-		// console.log(index);
-		// const index = cp.filter(function (x) {
-		// 	return x.uuid !== uuid;
-		// });
 		cp.splice(index, 1);
 		setQuestions(cp);
-		// setQuestions(index);
 	};
 
-	/* 
-		삭제된 데이터는 실제로 삭제됐지만, 내용에는 남아 있을 때.
-	
-	*/
-
-	const submit = () => {
-		alert("제출!!!");
+	const submit = async function () {
 		console.log(questions);
+		const payload = {
+			title: defaultValue.title,
+			subtitle: defaultValue.subtitle,
+			uuid: uuidv4(),
+			questions: questions,
+		};
+		try {
+			await db.collection("questions").add(payload);
+			console.log("Complete make form.");
+			history.push("/");
+		} catch (error) {
+			console.log("error");
+		}
 	};
 
 	return (
 		<Layout>
+			<Dialog
+				open={open}
+				onClose={handleClose}
+				aria-labelledby="alert-dialog-title"
+				aria-describedby="alert-dialog-description"
+			>
+				<DialogTitle id="alert-dialog-title">{"Back"}</DialogTitle>
+				<DialogContent>
+					<DialogContentText id="alert-dialog-description">
+						현재 폼은 저장되지 않습니다. 뒤로가시겠습니까?
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleClose} color="primary">
+						취소
+					</Button>
+					<Button onClick={goBack} color="primary" autoFocus>
+						뒤로가기
+					</Button>
+				</DialogActions>
+			</Dialog>
 			<Header>
-				<Title
+				<Btn>
+					<IoArrowBackOutline
+						size={32}
+						title="back"
+						onClick={() => handleClickOpen()}
+					/>
+				</Btn>
+				<QuestionTitle
 					placeholder="제목을 입력하세요"
 					name="title"
 					value={defaultValue.title || ""}
 					onChange={(e) => onChangeDefault(e, "title")}
-				></Title>
+				></QuestionTitle>
 				<Submit variant="contained" color="primary" onClick={submit}>
 					Submit
 				</Submit>

@@ -141,6 +141,8 @@ const RadioQuestion = (props) => {
 					<RadioWrapper>
 						{content.options.map((element, index) => {
 							const id = element.uuid;
+							const optionText = "옵션 " + (index + 1);
+
 							if (index + 1 !== content.options.length) {
 								return (
 									<RadioBox key={element.uuid}>
@@ -151,7 +153,7 @@ const RadioQuestion = (props) => {
 											onChange={() => setDisabledRadio(0)}
 										/>
 										<RadioText
-											placeholder="설문지 내용"
+											placeholder={optionText}
 											value={element.title}
 											onChange={(e) => editOption(e, id, "title")}
 										></RadioText>
@@ -173,7 +175,7 @@ const RadioQuestion = (props) => {
 											onChange={() => setDisabledRadio(0)}
 										/>
 										<RadioText
-											placeholder="설문지 내용"
+											placeholder={optionText}
 											value={element.title}
 											onChange={(e) => editOption(e, id, "title")}
 										></RadioText>

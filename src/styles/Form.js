@@ -43,9 +43,10 @@ const FormContainer = styled.div`
 	display: flex;
 	justify-content: center;
 `;
-const Title = styled.input`
+const QuestionTitle = styled.input`
 	border-style: none;
 	margin-left: 2rem;
+	width: 35rem;
 	padding: 0.5rem 1rem;
 
 	flex-shrink: 1;
@@ -55,7 +56,8 @@ const Title = styled.input`
 	font: 400 16px Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
 	min-width: 0%;
 	outline: none;
-	padding: 0.125em 0;
+	font-size: 1.25rem;
+	padding: 0.5em 0;
 	z-index: 0;
 
 	border-bottom: 2px solid black;
@@ -72,6 +74,7 @@ const Btn = styled.button`
 	width: 3rem;
 	height: 3rem;
 	background-color: white;
+	border-radius: 20px;
 	border-style: none;
 	&:hover {
 		background-color: #e3e3e3;
@@ -134,7 +137,7 @@ const FormBox = styled.div`
 
 export {
 	Header,
-	Title,
+	QuestionTitle,
 	Submit,
 	FormContainer,
 	FormCenter,
