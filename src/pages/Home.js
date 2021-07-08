@@ -11,7 +11,9 @@ import Fade from "@material-ui/core/Fade";
 import Divider from "@material-ui/core/Divider";
 import { Button } from "@material-ui/core";
 import { Layout, Container } from "../styles/Layout";
+import { AiOutlineLink } from "react-icons/ai";
 import { FaCopy } from "react-icons/fa";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const useStyles = makeStyles((theme) => ({
 	modal: {
@@ -58,11 +60,10 @@ const Home = () => {
 	const move = function (link) {
 		history.push(link);
 	};
-
-	const CopyUrl = function (uuid) {
-		const url = "http://localhost:3000/form/" + uuid;
-		alert(url);
+	const moveLink = function (link) {
+		window.open(link, "_blank");
 	};
+
 	return (
 		<Layout>
 			<Modal
@@ -83,17 +84,28 @@ const Home = () => {
 						<p>해당 form을 복사하시려면 우측 버튼을 눌러주세요</p>
 						<FormListWrapper>
 							{formLists.map((element, index) => {
+								const url = "http://localhost:3000/form/" + element.uuid;
 								return (
 									<div>
 										<FormList>
 											<FormTitle>
-												<FormTitleText>{element.title}</FormTitleText>
+												<FormTitleText>
+													{element.title}123123123123123asdfasdfasdfasdf
+												</FormTitleText>
 											</FormTitle>
 											<CopyBtn>
-												<FaCopy
+												<CopyToClipboard
+													text={url}
+													onCopy={() => alert("copy!")}
+												>
+													<FaCopy size={22} title="copy" />
+												</CopyToClipboard>
+											</CopyBtn>
+											<CopyBtn>
+												<AiOutlineLink
 													size={22}
 													title="copy"
-													onClick={() => CopyUrl(element.uuid)}
+													onClick={() => moveLink(url)}
 												/>
 											</CopyBtn>
 										</FormList>
@@ -154,7 +166,7 @@ const FormList = styled.div`
 	display: flex;
 	justify-content: space-between;
 	flex-direction: row;
-	width: 23rem;
+	width: 20rem;
 `;
 
 const CopyBtnBox = styled.div`

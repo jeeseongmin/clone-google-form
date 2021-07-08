@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../App.css";
 import { RiDeleteBinLine } from "react-icons/ri";
 import styled from "styled-components";
@@ -16,22 +16,32 @@ import {
 	Divider,
 } from "@material-ui/core";
 
-import { FormBoxWrapper, FormBox } from "../styles/Form";
 import {
-	Top,
-	Top1,
 	TextDiv,
 	Title,
 	SubTitle,
+	TextText,
+	Top,
+	Top1,
 	Mid,
 	Bottom,
-	TextText,
+	UserTitle,
+	UserSubTitle,
+	UserText,
+	UserTop,
 } from "../styles/Question";
 
-const TextForm = (props) => {
+import { FormBoxWrapper, FormBox } from "../styles/Form";
+
+const TextQuestion = (props) => {
 	const question = props.question;
 	const updateQuestion = props.update;
 	const deleteQuestion = props.delete;
+	const [isFocused, setIsFocused] = useState(false);
+	function focusHandler(isFocused) {
+		setIsFocused(isFocused);
+	}
+	const textEffect = useRef();
 
 	const [checked, setChecked] = useState(false);
 	const toggleChecked = () => {
@@ -67,71 +77,63 @@ const TextForm = (props) => {
 	return (
 		<FormBoxWrapper>
 			<FormBox>
-				<Top>
-					<Top1>
-						<TextDiv>
-							<Title
-								placeholder="질문"
-								value={content.title || ""}
-								onChange={(e) => ChangeContent(e, "title")}
-							></Title>
-						</TextDiv>
-						<DropdownButton
-							id="dropdown-item-button"
-							title={content.questionType}
-						>
-							<Dropdown.Item as="button" onClick={(e) => changeType("text")}>
-								text
-							</Dropdown.Item>
-							<Dropdown.Item
-								as="button"
-								onClick={(e) => changeType("checkbox")}
-							>
-								checkbox
-							</Dropdown.Item>
-							<Dropdown.Item as="button" onClick={() => changeType("radio")}>
-								radio
-							</Dropdown.Item>
-						</DropdownButton>
-					</Top1>
-					<SubTitle
+				<UserTop>
+					<UserTitle
+						placeholder="질문"
+						value={content.title || ""}
+						readOnly
+					></UserTitle>
+					<UserSubTitle
 						placeholder="설명"
 						value={content.subtitle || ""}
-						onChange={(e) => ChangeContent(e, "subtitle")}
-					></SubTitle>
-				</Top>
-				<Mid>
-					<TextDiv>
-						<TextText
+						readOnly
+					></UserSubTitle>
+					<UserTextWrapper>
+						<UserText
 							placeholder="단답형 텍스트"
 							value={content.text || ""}
-						></TextText>
-					</TextDiv>
-				</Mid>
-				<Divider />
-				<Bottom>
-					<RiDeleteBinLine
-						size={25}
-						className="deleteBtn"
-						onClick={() => deleteQuestion(content.uuid)}
-					/>
-					<Divider orientation="vertical" flexItem />
-					<div className="formGroup">
-						<FormControlLabel
-							control={<Switch checked={checked} onChange={toggleChecked} />}
-							className="fcl"
-							label="필수"
-						/>
-					</div>
-				</Bottom>
+							className="effectInput"
+							onFocus={(e) => focusHandler(true)}
+							onBlur={(e) => focusHandler(false)}
+							// onChange={(e) => ChangeContent(e, "text")}
+						></UserText>
+						<UserTextEffectWrapper className="effectDiv"></UserTextEffectWrapper>
+						<UserTextEffectPoint
+							className={
+								isFocused
+									? "defaultEffect effectPoint"
+									: "defaultEffect nonEffectPoint"
+							}
+						></UserTextEffectPoint>
+					</UserTextWrapper>
+				</UserTop>
 			</FormBox>
 		</FormBoxWrapper>
 	);
 };
+const UserTextWrapper = styled.div`
+	position: relative;
+	margin-bottom: 1rem;
+	display: flex;
+`;
+const UserTextEffectWrapper = styled.div`
+	position: absolute;
+	width: 18rem;
+	height: 1px;
+	/* border: 1px solid rgb(103, 58, 183); */
+	bottom: -2px;
+	left: 0px;
+	margin: 0;
+	user-select: none;
+`;
+
+const UserTextEffectPoint = styled.div`
+	/* transform: matrix(0, 0, 0, 1, 0, 0); */
+`;
 
 // const areEqual = (prevProps, nextProps) => {
 // 	return prevProps.question.uuid === nextProps.question.uuid;
 // };
 
-export default TextForm;
+export default TextQuestion;
 // export default React.memo(TextQuestion, areEqual);

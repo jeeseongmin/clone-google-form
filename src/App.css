@@ -53,3 +53,40 @@
 .radioDeleteBtn {
 	margin-right: 1.75em;
 }
+
+/* 이 부분이 focus event */
+
+.nonEffectPoint {
+	transform-origin: 150px center;
+	transform: scaleX(0) !important;
+}
+
+.defaultEffect {
+	position: absolute;
+	background-color: rgb(103, 58, 183);
+	bottom: -2px;
+	left: 0px;
+	height: 2px;
+	margin: 0;
+	width: 18rem;
+}
+
+.effectPoint {
+	/* border: 1px solid rgb(103, 58, 183); */
+	transform-origin: 200px center;
+	animation-delay: 1s;
+	animation-direction: normal;
+	transition-duration: 0.3s;
+	transform: scaleX(1) !important;
+	transform: matrix(0, 0, 0, 1, 0, 0);
+}
+
+/* .effectInput:focus ~ .effectPoint {
+	/* border: 1px solid rgb(103, 58, 183); */
+/* transform-origin: 200px center;
+	animation-delay: 1s;
+	animation-direction: normal;
+	transition-duration: 0.3s;
+	transform: scaleX(1) !important;
+	transform: matrix(0, 0, 0, 1, 0, 0); */
+/* }  */

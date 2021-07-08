@@ -17,8 +17,6 @@ import {
 } from "@material-ui/core";
 
 import {
-	FormBoxWrapper,
-	FormBox,
 	Top,
 	Top1,
 	TextDiv,
@@ -34,6 +32,7 @@ import {
 	EmptyRadioBox,
 	EmptryRadio,
 } from "../styles/Question";
+import { FormBoxWrapper, FormBox } from "../styles/Form";
 
 const CheckboxForm = (props) => {
 	const question = props.question;

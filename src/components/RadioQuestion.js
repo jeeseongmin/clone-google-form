@@ -18,20 +18,21 @@ import {
 } from "@material-ui/core";
 
 import {
-	Top,
-	Top1,
+	UserTop,
 	TextDiv,
-	Title,
-	SubTitle,
+	UserTitle,
+	UserSubTitle,
 	Mid,
 	Bottom,
 	RadioWrapper,
 	RadioBox,
-	Radio,
+	UserRadio,
 	RadioText,
 	EmptyRadioText,
 	EmptyRadioBox,
 	EmptryRadio,
+	UserRadioBox,
+	UserRadioText,
 } from "../styles/Question";
 import { FormBoxWrapper, FormBox } from "../styles/Form";
 
@@ -103,39 +104,18 @@ const RadioForm = (props) => {
 	return (
 		<FormBoxWrapper>
 			<FormBox>
-				<Top>
-					<Top1>
-						<TextDiv>
-							<Title
-								placeholder="설문지 제목"
-								value={content.title || ""}
-								onChange={(e) => ChangeContent(e, "title")}
-							></Title>
-						</TextDiv>
-						<DropdownButton
-							id="dropdown-item-button"
-							title={content.questionType}
-						>
-							<Dropdown.Item as="button" onClick={(e) => changeType("text")}>
-								text
-							</Dropdown.Item>
-							<Dropdown.Item
-								as="button"
-								onClick={(e) => changeType("checkbox")}
-							>
-								checkbox
-							</Dropdown.Item>
-							<Dropdown.Item as="button" onClick={() => changeType("radio")}>
-								radio
-							</Dropdown.Item>
-						</DropdownButton>
-					</Top1>
-					<SubTitle
+				<UserTop>
+					<UserTitle
+						placeholder="설문지 제목"
+						value={content.title || ""}
+						readOnly
+					></UserTitle>
+					<UserSubTitle
 						placeholder="설문지 내용"
 						value={content.subtitle || ""}
-						onChange={(e) => ChangeContent(e, "subtitle")}
-					></SubTitle>
-				</Top>
+						readOnly
+					></UserSubTitle>
+				</UserTop>
 				<Mid>
 					<RadioWrapper>
 						{content.options.map((element, index) => {
@@ -144,79 +124,41 @@ const RadioForm = (props) => {
 
 							if (index + 1 !== content.options.length) {
 								return (
-									<RadioBox key={element.uuid}>
-										<Radio
+									<UserRadioBox key={element.uuid}>
+										<UserRadio
 											type="radio"
 											name="radio"
 											checked={disabledRadio}
 											onChange={() => setDisabledRadio(0)}
 										/>
-										<RadioText
+										<UserRadioText
 											placeholder={optionText}
 											value={element.title}
 											onChange={(e) => editOption(e, id, "title")}
-										></RadioText>
-										<IoMdClose
-											size={28}
-											className="radioDeleteBtn"
-											onClick={() => deleteOption(id)}
-										/>
-									</RadioBox>
+										></UserRadioText>
+									</UserRadioBox>
 								);
 							} else {
 								return (
-									<RadioBox key={element.uuid}>
-										<Radio
+									<UserRadioBox key={element.uuid}>
+										<UserRadio
 											type="radio"
 											name="radio"
 											ref={radioRef}
 											checked={disabledRadio}
 											onChange={() => setDisabledRadio(0)}
 										/>
-										<RadioText
+										<UserRadioText
 											placeholder={optionText}
 											value={element.title}
 											onChange={(e) => editOption(e, id, "title")}
-										></RadioText>
-										<IoMdClose
-											size={28}
-											className="radioDeleteBtn"
-											onClick={() => deleteOption(id)}
-										/>
-									</RadioBox>
+										></UserRadioText>
+									</UserRadioBox>
 								);
 							}
 						})}
-
-						<EmptyRadioBox>
-							<EmptryRadio
-								type="radio"
-								checked={disabledRadio}
-								onChange={() => setDisabledRadio(0)}
-							/>
-							<EmptyRadioText
-								placeholder="옵션 추가"
-								onClick={(e) => addOption(e)}
-							></EmptyRadioText>
-						</EmptyRadioBox>
 					</RadioWrapper>
 				</Mid>
-				<Divider />
-				<Bottom>
-					<RiDeleteBinLine
-						size={25}
-						className="deleteBtn"
-						onClick={() => deleteQuestion(question.uuid)}
-					/>
-					<Divider orientation="vertical" flexItem />
-					<div className="formGroup">
-						<FormControlLabel
-							control={<Switch checked={checked} onChange={toggleChecked} />}
-							className="fcl"
-							label="필수"
-						/>
-					</div>
-				</Bottom>
 			</FormBox>
 		</FormBoxWrapper>
 	);

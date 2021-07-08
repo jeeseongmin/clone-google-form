@@ -36,12 +36,13 @@ const Header = styled.div`
 `;
 const FormContainer = styled.div`
 	width: 100%;
-	background-color: #82c8e6;
+	background-color: rgb(240, 235, 248);
 	height: 100%;
 	overflow-y: scroll;
 
 	display: flex;
 	justify-content: center;
+	border: 1px solid red;
 `;
 const QuestionTitle = styled.input`
 	border-style: none;
@@ -85,6 +86,17 @@ const FormBoxWrapper = styled.div`
 	background-color: white;
 	margin-top: 1rem;
 	margin-bottom: 1rem;
+	border: 1px solid #dadce0;
+	border-radius: 8px;
+`;
+const TopBoxWrapper = styled.div`
+	padding: 0.75rem;
+	background-color: white;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	border: 1px solid #dadce0;
+	border-radius: 8px;
+	position: relative;
 `;
 
 const DefaultTitle = styled.input`
@@ -131,12 +143,75 @@ const FormBox = styled.div`
 	width: 100%;
 	max-width: 100%;
 	height: auto;
+	padding: 0 0.5rem;
 
 	/* padding: 0.75rem; */
 `;
 
+const UserDefaultTitle = styled.div`
+	border-style: none;
+	border: 1px solid red;
+	/* margin-left: 2rem; */
+
+	flex-shrink: 1;
+	background-color: transparent;
+	border: none;
+	display: block;
+	font: 400 16px Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+	min-width: 0%;
+	outline: none;
+	padding: 0.25em 0;
+	z-index: 0;
+	font-size: 2rem;
+	word-break: break-all;
+	width: 38rem;
+	margin-bottom: 0rem;
+`;
+
+const UserDefaultSubTitle = styled.div`
+	border-style: none;
+	/* margin-left: 2rem; */
+
+	flex-shrink: 1;
+	background-color: transparent;
+	border: none;
+	display: block;
+	font: 400 16px Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+	min-width: 0%;
+	outline: none;
+	padding: 0.25em 0;
+	padding-left: 0.3rem;
+	z-index: 0;
+	width: 38rem;
+	word-break: break-all;
+
+	margin-bottom: 0.5rem;
+`;
+const UserDefaultRed = styled.div`
+	border-style: none;
+	/* margin-left: 2rem; */
+
+	flex-shrink: 1;
+	background-color: transparent;
+	border: none;
+	display: block;
+	font: 400 16px Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+	min-width: 0%;
+	outline: none;
+	padding: 0.25em 0;
+	padding-left: 0.3rem;
+	z-index: 0;
+	width: 38rem;
+	word-break: break-all;
+	color: #d93025;
+
+	/* border-bottom: 3px solid white; */
+	margin-bottom: 0.5rem;
+`;
+
 export {
 	Header,
+	TopBoxWrapper,
 	QuestionTitle,
 	Submit,
 	FormContainer,
@@ -147,4 +222,7 @@ export {
 	FormBox,
 	DefaultTitle,
 	DefaultSubTitle,
+	UserDefaultTitle,
+	UserDefaultSubTitle,
+	UserDefaultRed,
 };
