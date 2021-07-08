@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "../App.css";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { IoMdClose } from "react-icons/io";
+import styled from "styled-components";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { v4 as uuidv4 } from "uuid";
@@ -35,11 +36,11 @@ import {
 	EmptryRadio,
 } from "../styles/Question";
 
-const CheckboxQuestion = (props) => {
+const RadioForm = (props) => {
 	const question = props.question;
 	const updateQuestion = props.update;
 	const deleteQuestion = props.delete;
-	const [disabledCheckbox, setDisabledCheckbox] = useState(0);
+	const [disabledRadio, setDisabledRadio] = useState(0);
 
 	const radioRef = useRef(null);
 
@@ -141,14 +142,15 @@ const CheckboxQuestion = (props) => {
 						{content.options.map((element, index) => {
 							const id = element.uuid;
 							const optionText = "옵션 " + (index + 1);
+
 							if (index + 1 !== content.options.length) {
 								return (
 									<RadioBox key={element.uuid}>
 										<Radio
-											type="checkbox"
-											name="checkbox"
-											checked={disabledCheckbox}
-											onChange={() => setDisabledCheckbox(0)}
+											type="radio"
+											name="radio"
+											checked={disabledRadio}
+											onChange={() => setDisabledRadio(0)}
 										/>
 										<RadioText
 											placeholder={optionText}
@@ -166,11 +168,11 @@ const CheckboxQuestion = (props) => {
 								return (
 									<RadioBox key={element.uuid}>
 										<Radio
-											type="checkbox"
-											name="checkbox"
+											type="radio"
+											name="radio"
 											ref={radioRef}
-											checked={disabledCheckbox}
-											onChange={() => setDisabledCheckbox(0)}
+											checked={disabledRadio}
+											onChange={() => setDisabledRadio(0)}
 										/>
 										<RadioText
 											placeholder={optionText}
@@ -189,9 +191,9 @@ const CheckboxQuestion = (props) => {
 
 						<EmptyRadioBox>
 							<EmptryRadio
-								type="checkbox"
-								checked={disabledCheckbox}
-								onChange={() => setDisabledCheckbox(0)}
+								type="radio"
+								checked={disabledRadio}
+								onChange={() => setDisabledRadio(0)}
 							/>
 							<EmptyRadioText
 								placeholder="옵션 추가"
@@ -221,4 +223,4 @@ const CheckboxQuestion = (props) => {
 	);
 };
 
-export default CheckboxQuestion;
+export default RadioForm;

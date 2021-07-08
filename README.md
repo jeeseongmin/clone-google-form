@@ -62,9 +62,6 @@
 - 유저가 정보를 입력할 수 있어야 한다.
 - 새로고침 되면 정보가 날라가야한다.
 - `제출`을 누르게 되면 유저가 작성한 정보가 db에 저장되어야 한다.
-- db에 저장되는 방식은,
-
-  -
 
 ### 4. FinalGoogleForm.js
 
@@ -75,7 +72,7 @@
   - FinalGoogleForm은 기존에 있는 데이터를 불러오는 역할
   - GoogleFormUser는 input을 채워넣어야 하는 역할
 - GoogleFormUser와 달리 submit 버튼이 없다.
-- 대신에 수정하기를 누르면, 수정할 수 있도록
+- 대신에 수정하기를 누르면, 수정할 수 있게 나타난다.
 
 ### 5. GoogleFormReport.js
 
@@ -154,7 +151,8 @@ tree를 좀 더 디벨롭해보자면,
         -        questionType (checkbox / text / radio)
          -       uuid
 
-- 작성자가 질문지를 작성할 때마다 GoogleDocs에 추가(push)가 된다.
+- 작성자가 질문지를 작성할 때마다 GoogleForm 콜렉션에 추가(push)가 된다.
+- 참고로 firebase에 db.collection("GoogleForm").add(Questions) 를 하게 되면 doc의 이름은 유니크한 id로 저장이 되는데, 이 doc 하나하나가 작성자가 생성한 googleForm의 문서 id가 된다.
 
 ```
 const submit = () => {
@@ -170,5 +168,5 @@ const submit = () => {
 }
 ```
 
-- GoogleDocs에 push 후 해당 ID를 참조하여
+- GoogleForm에 add 후 해당 ID를 참조하여
 - 작성자가 질문을 추가하면

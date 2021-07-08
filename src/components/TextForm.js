@@ -29,7 +29,7 @@ import {
 	TextText,
 } from "../styles/Question";
 
-const TextQuestion = (props) => {
+const TextForm = (props) => {
 	const question = props.question;
 	const updateQuestion = props.update;
 	const deleteQuestion = props.delete;
@@ -135,5 +135,5 @@ const TextQuestion = (props) => {
 // 	return prevProps.question.uuid === nextProps.question.uuid;
 // };
 
-export default TextQuestion;
+export default TextForm;
 // export default React.memo(TextQuestion, areEqual);

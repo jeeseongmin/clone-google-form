@@ -19,9 +19,9 @@ import { GrPowerReset } from "react-icons/gr";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import { v4 as uuidv4 } from "uuid";
-import TextQuestion from "../components/TextQuestion";
-import CheckboxQuestion from "../components/CheckboxQuestion";
-import RadioQuestion from "../components/RadioQuestion";
+import TextQuestion from "../components/TextForm";
+import CheckboxQuestion from "../components/CheckboxForm";
+import RadioQuestion from "../components/RadioForm";
 import { Layout } from "../styles/Layout";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -188,7 +188,6 @@ const GoogleFormUser = () => {
 					/>
 				</Btn>
 				<QuestionTitle
-					placeholder="제목을 입력하세요"
 					name="title"
 					value={question.title}
 					readOnly
@@ -218,14 +217,14 @@ const GoogleFormUser = () => {
 							></DefaultSubTitle>
 						</FormBox>
 					</FormBoxWrapper>
-					{question.questions.map((question, index) => {
+					{question.questions.map((element, index) => {
 						console.log("question ", index);
-						console.log(question);
-						if (question.questionType === "text") {
+						console.log(element);
+						if (element.questionType === "text") {
 							return (
 								<TextQuestion
-									key={question.uuid}
-									question={question}
+									key={element.uuid}
+									question={element}
 									update={updateQuestion}
 									delete={deleteQuestion}
 								/>
@@ -233,8 +232,8 @@ const GoogleFormUser = () => {
 						} else if (question.questionType === "radio") {
 							return (
 								<RadioQuestion
-									key={question.uuid}
-									question={question}
+									key={element.uuid}
+									question={element}
 									update={updateQuestion}
 									delete={deleteQuestion}
 								/>
@@ -242,8 +241,8 @@ const GoogleFormUser = () => {
 						} else if (question.questionType === "checkbox") {
 							return (
 								<CheckboxQuestion
-									key={question.uuid}
-									question={question}
+									key={element.uuid}
+									question={element}
 									update={updateQuestion}
 									delete={deleteQuestion}
 								/>

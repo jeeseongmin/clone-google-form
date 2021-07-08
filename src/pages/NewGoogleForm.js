@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import * as Sentry from "@sentry/react";
+
 import { db, firebase, firebaseApp } from "../firebase";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -19,9 +21,9 @@ import { GrPowerReset } from "react-icons/gr";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import { v4 as uuidv4 } from "uuid";
-import TextQuestion from "../components/TextQuestion";
-import CheckboxQuestion from "../components/CheckboxQuestion";
-import RadioQuestion from "../components/RadioQuestion";
+import TextForm from "../components/TextForm";
+import CheckboxForm from "../components/CheckboxForm";
+import RadioForm from "../components/RadioForm";
 import { Layout } from "../styles/Layout";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -126,11 +128,13 @@ const NewGoogleForm = () => {
 			questions: questions,
 		};
 		try {
-			await db.collection("questions").add(payload);
+			await db.collection("questions").push(payload);
 			console.log("Complete make form.");
 			history.push("/");
 		} catch (error) {
-			console.log("error");
+			console.log(error);
+			Sentry.captureException(error);
+			alert("에러입니다");
 		}
 	};
 
@@ -209,7 +213,7 @@ const NewGoogleForm = () => {
 						console.log(question);
 						if (question.questionType === "text") {
 							return (
-								<TextQuestion
+								<TextForm
 									key={question.uuid}
 									question={question}
 									update={updateQuestion}
@@ -218,7 +222,7 @@ const NewGoogleForm = () => {
 							);
 						} else if (question.questionType === "radio") {
 							return (
-								<RadioQuestion
+								<RadioForm
 									key={question.uuid}
 									question={question}
 									update={updateQuestion}
@@ -227,7 +231,7 @@ const NewGoogleForm = () => {
 							);
 						} else if (question.questionType === "checkbox") {
 							return (
-								<CheckboxQuestion
+								<CheckboxForm
 									key={question.uuid}
 									question={question}
 									update={updateQuestion}
