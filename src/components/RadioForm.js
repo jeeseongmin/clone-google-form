@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { v4 as uuidv4 } from "uuid";
+import Toggle from "../components/Toggle";
 
 import {
 	Button,
@@ -40,6 +41,7 @@ const RadioForm = (props) => {
 	const updateQuestion = props.update;
 	const deleteQuestion = props.delete;
 	const [disabledRadio, setDisabledRadio] = useState(0);
+	const [toggle, setToggle] = useState(false);
 
 	const radioRef = useRef(null);
 
@@ -188,17 +190,19 @@ const RadioForm = (props) => {
 							}
 						})}
 
-						<EmptyRadioBox>
-							<EmptryRadio
+						<RadioBox>
+							<Radio
 								type="radio"
+								name="radio"
 								checked={disabledRadio}
 								onChange={() => setDisabledRadio(0)}
 							/>
-							<EmptyRadioText
+							<RadioText
 								placeholder="옵션 추가"
 								onClick={(e) => addOption(e)}
-							></EmptyRadioText>
-						</EmptyRadioBox>
+							></RadioText>
+							<IoMdClose size={28} className="radioDeleteBtn space-hidden" />
+						</RadioBox>
 					</RadioWrapper>
 				</Mid>
 				<Divider />
@@ -210,10 +214,10 @@ const RadioForm = (props) => {
 					/>
 					<Divider orientation="vertical" flexItem />
 					<div className="formGroup">
-						<FormControlLabel
-							control={<Switch checked={checked} onChange={toggleChecked} />}
-							className="fcl"
-							label="필수"
+						<p>필수</p>
+						<Toggle
+							active={toggle}
+							setToggle={(e) => setToggle((prev) => !prev)}
 						/>
 					</div>
 				</Bottom>

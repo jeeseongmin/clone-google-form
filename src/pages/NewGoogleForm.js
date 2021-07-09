@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import * as Sentry from "@sentry/react";
 
-import { db, firebase, firebaseApp } from "../firebase";
+import { db } from "../firebase";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import {
 	Header,
+	HeaderTop,
+	HeaderTopLeft,
+	HeaderTopRight,
+	HeaderBottom,
 	QuestionTitle,
 	Submit,
 	FormContainer,
@@ -16,11 +20,26 @@ import {
 	FormBox,
 	DefaultTitle,
 	DefaultSubTitle,
+	FormBoxTop,
+	FormBoxLeft,
 } from "../styles/Form";
+
+import {
+	UserTextWrapper,
+	DefaultTitleWrapper,
+	UserTextEffectWrapper,
+	UserTextEffectPoint,
+	UserText,
+} from "../styles/Question";
 import { GrPowerReset } from "react-icons/gr";
 import { IoArrowBackOutline } from "react-icons/io5";
-import { BsFillPlusCircleFill } from "react-icons/bs";
+import { BsEye } from "react-icons/bs";
+import { IoSettingsOutline } from "react-icons/io5";
+import { RiPaletteLine } from "react-icons/ri";
+import { BsFillPlusCircleFill, BsStar } from "react-icons/bs";
+import { AiOutlineFolder } from "react-icons/ai";
 import { v4 as uuidv4 } from "uuid";
+import googleFormIcon from "../images/googleFormIcon.png";
 import TextForm from "../components/TextForm";
 import CheckboxForm from "../components/CheckboxForm";
 import RadioForm from "../components/RadioForm";
@@ -31,11 +50,54 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Toggle from "../components/Toggle";
 
 const NewGoogleForm = () => {
 	const history = useHistory();
 	const [questions, setQuestions] = useState([]);
-	const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = useState(false);
+	const [isFocusedBox, setIsFocusedBox] = useState(false);
+
+	const [menuPos, setMenuPos] = useState(0);
+
+	const [isFocused, setIsFocused] = useState({
+		title1: false,
+		title2: false,
+		subTitle: false,
+	});
+	function focusHandler(state, type) {
+		const cp = { ...isFocused };
+		cp[type] = state;
+		setIsFocused(cp);
+	}
+
+	function focusBoxHandler(status) {
+		setIsFocusedBox(status);
+	}
+
+	const escFunction = useCallback((event) => {
+		if (event.keyCode === 27) {
+			//Do whatever when esc is pressed
+			handleClickOpen();
+		}
+	}, []);
+
+	useEffect(() => {
+		document.addEventListener("keydown", escFunction, false);
+
+		return () => {
+			document.removeEventListener("keydown", escFunction, false);
+		};
+	}, []);
+
+	const [content, setContent] = useState({
+		title: "",
+		subtitle: "",
+		text: "",
+		questionType: "",
+		uuid: "",
+	});
+
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
@@ -121,6 +183,10 @@ const NewGoogleForm = () => {
 
 	const submit = async function () {
 		console.log(questions);
+		if (defaultValue.title === "" || defaultValue.subtitle === "") {
+			alert("제목과 설명을 적어주세요.");
+			return;
+		}
 		const payload = {
 			title: defaultValue.title,
 			subtitle: defaultValue.subtitle,
@@ -135,6 +201,20 @@ const NewGoogleForm = () => {
 			console.log(error);
 			Sentry.captureException(error);
 			alert("에러입니다");
+		}
+	};
+
+	const moveMenu = function (e, pos) {
+		if (pos === "top") {
+			setMenuPos("0px");
+		} else if (pos === "text") {
+			console.log(e);
+			const text = e.current.offsetTop - 18 + "px";
+			setMenuPos(text);
+		} else {
+			console.log(e);
+			const text = e.clientY - 250 + "px";
+			setMenuPos(text);
 		}
 	};
 
@@ -162,89 +242,209 @@ const NewGoogleForm = () => {
 				</DialogActions>
 			</Dialog>
 			<Header>
-				<Btn>
-					<IoArrowBackOutline
-						size={32}
-						title="back"
-						onClick={() => handleClickOpen()}
-					/>
-				</Btn>
-				<QuestionTitle
-					placeholder="제목을 입력하세요"
-					name="title"
-					value={defaultValue.title || ""}
-					onChange={(e) => onChangeDefault(e, "title")}
-				></QuestionTitle>
-				<Submit variant="contained" color="primary" onClick={submit}>
-					Submit
-				</Submit>
+				<HeaderTop>
+					<HeaderTopLeft>
+						<div
+							className="ggFormIconWrapper"
+							onClick={() => handleClickOpen()}
+						>
+							<img
+								src={googleFormIcon}
+								className="ggForm"
+								alt="googleformIcon"
+							/>
+						</div>
+						<UserTextWrapper className="NewFormDefaultTitleWrapper">
+							<UserText
+								placeholder="제목을 입력하세요"
+								name="title"
+								className="NewFormDefaultTitle"
+								value={defaultValue.title || ""}
+								onChange={(e) => onChangeDefault(e, "title")}
+								onFocus={(e) => focusHandler(true, "title1")}
+								onBlur={(e) => focusHandler(false, "title1")}
+							></UserText>
+							<UserTextEffectWrapper className="effectDiv"></UserTextEffectWrapper>
+							<UserTextEffectPoint
+								className={
+									isFocused.title1
+										? "defaultEffect effectPoint"
+										: "defaultEffect nonEffectPoint"
+								}
+							></UserTextEffectPoint>
+						</UserTextWrapper>
+						<Btn>
+							<AiOutlineFolder size={25} title="folder" />
+						</Btn>
+						<Btn>
+							<BsStar size={25} title="star" />
+						</Btn>
+					</HeaderTopLeft>
+
+					<HeaderTopRight>
+						<Btn>
+							<RiPaletteLine size={25} title="palette" />
+						</Btn>
+						<Btn>
+							<BsEye size={25} title="eye" />
+						</Btn>
+						<Btn>
+							<IoSettingsOutline size={25} title="setting" />
+						</Btn>
+
+						<Submit variant="contained" color="primary" onClick={submit}>
+							보내기
+						</Submit>
+					</HeaderTopRight>
+				</HeaderTop>
+				<HeaderBottom></HeaderBottom>
 			</Header>
 			<Opac></Opac>
 			<FormContainer>
-				<FormCenter>
-					<BtnBox>
-						<Btn onClick={addQuestion}>
-							<BsFillPlusCircleFill size={25} title="delete" />
-						</Btn>
-						<Btn onClick={reset}>
-							<GrPowerReset size={25} title="reset" />
-						</Btn>
-					</BtnBox>
-					<FormBoxWrapper>
-						<FormBox>
-							<DefaultTitle
-								placeholder="설문지 제목"
-								type="text"
-								name="title"
-								value={defaultValue.title || ""}
-								onChange={(e) => onChangeDefault(e, "title")}
-							></DefaultTitle>
-							<DefaultSubTitle
-								placeholder="설문지 내용"
-								type="text"
-								name="subtitle"
-								value={defaultValue.subtitle || ""}
-								onChange={(e) => onChangeDefault(e, "subtitle")}
-							></DefaultSubTitle>
-						</FormBox>
-					</FormBoxWrapper>
-					{questions.map((question, index) => {
-						console.log("question ", index);
-						console.log(question);
-						if (question.questionType === "text") {
-							return (
-								<TextForm
-									key={question.uuid}
-									question={question}
-									update={updateQuestion}
-									delete={deleteQuestion}
-								/>
-							);
-						} else if (question.questionType === "radio") {
-							return (
-								<RadioForm
-									key={question.uuid}
-									question={question}
-									update={updateQuestion}
-									delete={deleteQuestion}
-								/>
-							);
-						} else if (question.questionType === "checkbox") {
-							return (
-								<CheckboxForm
-									key={question.uuid}
-									question={question}
-									update={updateQuestion}
-									delete={deleteQuestion}
-								/>
-							);
-						}
-					})}
-				</FormCenter>
+				<FormCenterWrapper>
+					<FormCenter>
+						<MenuWrapper>
+							<Menu menuPos={menuPos}>
+								<MenuBtn onClick={addQuestion}>
+									<BsFillPlusCircleFill size={25} title="add" />
+								</MenuBtn>
+								<MenuBtn onClick={reset}>
+									<GrPowerReset size={25} title="reset" />
+								</MenuBtn>
+							</Menu>
+						</MenuWrapper>
+						<FormBoxWrapper
+							onFocus={() => focusBoxHandler(true)}
+							onBlur={() => focusBoxHandler(false)}
+							onClick={(e) => moveMenu(e, "top")}
+						>
+							<FormBoxLeft className={isFocusedBox ? "" : "hideLeftCheck"}>
+								{/* 색처리 */}
+							</FormBoxLeft>
+							<FormBoxTop>{/* 색처리 */}</FormBoxTop>
+							<FormBox>
+								<DefaultTitleWrapper>
+									<DefaultTitle
+										autocomplete="off"
+										placeholder="제목을 입력하세요"
+										name="title"
+										className="NewFormDefaultTitle"
+										value={defaultValue.title || ""}
+										onChange={(e) => onChangeDefault(e, "title")}
+										onFocus={(e) => focusHandler(true, "title2")}
+										onBlur={(e) => focusHandler(false, "title2")}
+									></DefaultTitle>
+									<UserTextEffectWrapper className="effectDiv"></UserTextEffectWrapper>
+									<UserTextEffectPoint
+										className={
+											isFocused.title2
+												? "defaultEffect effectPoint"
+												: "defaultEffect nonEffectPoint"
+										}
+									></UserTextEffectPoint>
+								</DefaultTitleWrapper>
+								<DefaultTitleWrapper>
+									<DefaultSubTitle
+										autocomplete="off"
+										placeholder="설문지 내용"
+										type="text"
+										name="subtitle"
+										value={defaultValue.subtitle || ""}
+										onChange={(e) => onChangeDefault(e, "subtitle")}
+										onFocus={(e) => focusHandler(true, "subTitle")}
+										onBlur={(e) => focusHandler(false, "subTitle")}
+									></DefaultSubTitle>
+									<UserTextEffectWrapper className="effectDiv"></UserTextEffectWrapper>
+									<UserTextEffectPoint
+										className={
+											isFocused.subTitle
+												? "defaultEffect effectPoint"
+												: "defaultEffect nonEffectPoint"
+										}
+									></UserTextEffectPoint>
+								</DefaultTitleWrapper>
+							</FormBox>{" "}
+						</FormBoxWrapper>
+						{questions.map((question, index) => {
+							console.log("question ", index);
+							console.log(question);
+							if (question.questionType === "text") {
+								return (
+									<TextForm
+										key={question.uuid}
+										question={question}
+										update={updateQuestion}
+										delete={deleteQuestion}
+										moveMenu={moveMenu}
+									/>
+								);
+							} else if (question.questionType === "radio") {
+								return (
+									<RadioForm
+										key={question.uuid}
+										question={question}
+										update={updateQuestion}
+										delete={deleteQuestion}
+									/>
+								);
+							} else if (question.questionType === "checkbox") {
+								return (
+									<CheckboxForm
+										key={question.uuid}
+										question={question}
+										update={updateQuestion}
+										delete={deleteQuestion}
+									/>
+								);
+							}
+						})}
+					</FormCenter>
+				</FormCenterWrapper>
 			</FormContainer>
 		</Layout>
 	);
 };
+
+const FormCenterWrapper = styled.div`
+	width: 44rem;
+	margin-bottom: 2rem;
+	padding-bottom: 2rem;
+	position: relative;
+	display: flex;
+`;
+
+const MenuWrapper = styled.div`
+	height: 0;
+	display: flex;
+	justify-content: flex-end;
+	position: relative;
+	width: 100%;
+`;
+const Menu = styled.div`
+	margin-top: 1.25rem;
+	height: 5rem;
+	width: 3.25rem;
+	background-color: white;
+	border: 1px solid #dadce0;
+	border-radius: 8px;
+	position: absolute;
+	top: ${(props) => props.menuPos};
+	right: -4rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	transition: top 1s, transform 1.5s;
+`;
+
+const MenuBtn = styled.div`
+	height: 2.5rem;
+	width: 2.5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
+
 const Opac = styled.div`
 	width: 100%;
 	/* border: 1px solid red; */

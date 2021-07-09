@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-// import { Layout, Container } from "../../styles/Form";
-import { db, firebase, firebaseApp } from "../firebase";
+import { db } from "../firebase";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
@@ -57,9 +55,6 @@ const Home = () => {
 
 	const history = useHistory();
 
-	const move = function (link) {
-		history.push(link);
-	};
 	const moveLink = function (link) {
 		window.open(link, "_blank");
 	};
@@ -89,9 +84,7 @@ const Home = () => {
 									<div>
 										<FormList>
 											<FormTitle>
-												<FormTitleText>
-													{element.title}123123123123123asdfasdfasdfasdf
-												</FormTitleText>
+												<FormTitleText>{element.title}</FormTitleText>
 											</FormTitle>
 											<CopyBtn>
 												<CopyToClipboard
@@ -121,7 +114,7 @@ const Home = () => {
 				<Button
 					variant="contained"
 					color="primary"
-					onClick={() => move("/form")}
+					onClick={() => history.push("/form")}
 				>
 					Make Form
 				</Button>

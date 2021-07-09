@@ -35,9 +35,16 @@
 .formGroup {
 	height: 100%;
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	align-items: center;
 	margin-left: 0.75rem;
+	font-size: 1rem;
+	margin-right: 0.75rem;
+}
+.formGroup > p {
+	padding: 0;
+	margin: 0.5rem 1rem;
+	/* margin-right: 0.5rem; */
 }
 .deleteBtn {
 	margin: 0 0.75rem;
@@ -56,9 +63,14 @@
 
 /* 이 부분이 focus event */
 
-.nonEffectPoint {
-	transform-origin: 150px center;
-	transform: scaleX(0) !important;
+.effectDiv {
+	position: absolute;
+	width: 18rem;
+	height: 1px;
+	bottom: -2px;
+	left: 0px;
+	margin: 0;
+	user-select: none;
 }
 
 .defaultEffect {
@@ -68,25 +80,118 @@
 	left: 0px;
 	height: 2px;
 	margin: 0;
-	width: 18rem;
+	transform: translateX(-50%);
+	left: 50%;
+}
+.nonEffectPoint {
+	transform: translateX(-50%);
+	left: 50%;
 }
 
 .effectPoint {
-	/* border: 1px solid rgb(103, 58, 183); */
-	transform-origin: 200px center;
-	animation-delay: 1s;
-	animation-direction: normal;
-	transition-duration: 0.3s;
-	transform: scaleX(1) !important;
-	transform: matrix(0, 0, 0, 1, 0, 0);
+	/* 애니메이션이 지속되는 시간 */
+	animation-duration: 0.3s;
+	/* 애니메이션이 부드러워지는 속성 */
+	animation-timing-function: ease;
+	/* 
+		none : 아무것도 지정되지 않음
+		forwards : 100%에 도달하면 유지
+		backwards : 애니메이션이 시작되기 전에 미리 스타일 적용
+		both : forwards, backwards 둘 다 적용
+	*/
+	animation-fill-mode: forwards;
+	/* 이름이 지정되면 해당 이름과 일치하는 키 프레임이 동작 */
+	animation-name: underline;
 }
 
-/* .effectInput:focus ~ .effectPoint {
-	/* border: 1px solid rgb(103, 58, 183); */
-/* transform-origin: 200px center;
-	animation-delay: 1s;
-	animation-direction: normal;
-	transition-duration: 0.3s;
-	transform: scaleX(1) !important;
-	transform: matrix(0, 0, 0, 1, 0, 0); */
-/* }  */
+@keyframes underline {
+	0% {
+		width: 0;
+	}
+	100% {
+		width: 100%;
+	}
+}
+
+.ggFormIconWrapper {
+	width: 3rem;
+	height: 3rem;
+	margin: 0 1rem;
+}
+
+.ggForm {
+	width: 100%;
+}
+
+.NewFormDefaultTitle {
+	border-bottom: none !important;
+	background-color: white !important;
+}
+.NewFormDefaultTitle:visited {
+	background-color: white !important;
+}
+
+.NewFormDefaultTitleWrapper {
+	margin-top: 1.75rem;
+	padding: 0.5rem 0;
+}
+
+.hideLeftCheck {
+	display: hidden !important;
+	background-color: white !important;
+}
+
+.space-hidden {
+	visibility: hidden;
+}
+
+/* Toggle 슬라이더 */
+
+.toggleContainer {
+	cursor: pointer;
+	position: relative;
+	height: 20px;
+	width: 30px;
+}
+
+.toggleContainer.active {
+	position: relative;
+}
+
+.toggleBar {
+	border-color: rgb(225, 216, 241);
+	border: 7px solid rgb(225, 216, 241);
+	background-color: rgb(225, 216, 241);
+	border-radius: 7px;
+	position: absolute;
+	top: 3px;
+	width: 28px;
+}
+
+.toggleCircle {
+	border-color: rgb(103, 58, 183);
+	color: rgba(255, 255, 255, 1);
+	border: 10px solid #fafafa;
+	transition: border-color 0.3s linear;
+	position: absolute;
+	border-radius: 100%;
+	box-shadow: 0 1px 3px rgba(0 0 0 /40%);
+}
+
+.toggleCircle.active {
+	border-color: rgb(103, 58, 183);
+	border: 10px solid rgb(103, 58, 183);
+	position: absolute;
+	border-radius: 100%;
+	box-shadow: 0 1px 3px rgba(0 0 0 /40%);
+}
+
+.toggleCircleWrapper {
+	cursor: pointer;
+	transition: 0.2s all linear;
+	transform: translate(-7px);
+}
+
+.toggleCircleWrapper.active {
+	transform: translate(17px);
+}

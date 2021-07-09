@@ -73,9 +73,10 @@ const SubTitle = styled.input`
 	outline: none;
 	padding: 0.5em 0;
 	z-index: 0;
-	padding-left: 0.15rem;
+	padding-left: 0.5rem;
+	/* margin-left: 0.75rem; */
 
-	width: 100%;
+	width: 98%;
 	border-bottom: 3px solid #e3e3e3;
 	margin-bottom: 1rem;
 `;
@@ -159,7 +160,7 @@ const RadioWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
-	align-items: center;
+	/* align-items: center; */
 `;
 
 const EmptyRadioBox = styled.div`
@@ -178,7 +179,6 @@ const RadioBox = styled.div`
 	flex-direction: row;
 	justify-content: flex-start;
 	align-items: center;
-	/* border: 1px solid red; */
 	margin-bottom: 0.5rem;
 `;
 
@@ -195,13 +195,11 @@ const UserRadioBox = styled.div`
 
 const EmptryRadio = styled.input`
 	width: 5rem;
-	/* border: 1px solid red; */
 	padding: 0;
 `;
 
 const Radio = styled.input`
 	width: 5rem;
-	/* border: 1px solid red; */
 	padding: 0;
 `;
 
@@ -247,8 +245,8 @@ const EmptyRadioText = styled.input`
 	z-index: 0;
 	padding-left: 0.15rem;
 	margin-left: -0.55rem;
-	margin-right: 1.5rem;
-	width: 5rem;
+	/* margin-right: 1.5rem; */
+	/* width: 5rem; */
 	border-bottom: 3px solid #e3e3e3;
 	/* border: 1px solid red; */
 `;
@@ -293,7 +291,53 @@ const UserRadioText = styled.input`
 	/* border: 1px solid red; */
 `;
 
+const DefaultTitleWrapper = styled.div`
+	position: relative;
+	margin-bottom: 1rem;
+	display: flex;
+
+	border-style: none;
+	margin-left: 1.25rem;
+
+	flex-shrink: 1;
+	background-color: transparent;
+	border: none;
+	display: block;
+	font: 400 16px Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+	min-width: 0%;
+	outline: none;
+	padding: 0.1em 0;
+	z-index: 0;
+	font-size: 2rem;
+	width: 38rem;
+	border-bottom: 3px solid #e3e3e3;
+	margin-bottom: 1rem;
+`;
+
+const UserTextWrapper = styled.div`
+	position: relative;
+	margin-bottom: 1rem;
+	display: flex;
+	width: 18rem;
+`;
+const UserTextEffectWrapper = styled.div`
+	position: absolute;
+	width: 18rem;
+	height: 1px;
+	/* border: 1px solid rgb(103, 58, 183); */
+	bottom: -2px;
+	left: 0px;
+	margin: 0;
+	user-select: none;
+`;
+
+const UserTextEffectPoint = styled.div``;
+
 export {
+	UserTextWrapper,
+	DefaultTitleWrapper,
+	UserTextEffectWrapper,
+	UserTextEffectPoint,
 	Top,
 	UserTop,
 	Top1,

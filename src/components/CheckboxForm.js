@@ -32,6 +32,7 @@ import {
 	EmptyRadioBox,
 	EmptryRadio,
 } from "../styles/Question";
+import Toggle from "../components/Toggle";
 import { FormBoxWrapper, FormBox } from "../styles/Form";
 
 const CheckboxForm = (props) => {
@@ -39,7 +40,7 @@ const CheckboxForm = (props) => {
 	const updateQuestion = props.update;
 	const deleteQuestion = props.delete;
 	const [disabledCheckbox, setDisabledCheckbox] = useState(0);
-
+	const [toggle, setToggle] = useState(false);
 	const radioRef = useRef(null);
 
 	const [checked, setChecked] = useState(false);
@@ -186,17 +187,20 @@ const CheckboxForm = (props) => {
 							}
 						})}
 
-						<EmptyRadioBox>
-							<EmptryRadio
+						<RadioBox>
+							<Radio
 								type="checkbox"
+								name="checkbox"
+								ref={radioRef}
 								checked={disabledCheckbox}
 								onChange={() => setDisabledCheckbox(0)}
 							/>
-							<EmptyRadioText
+							<RadioText
 								placeholder="옵션 추가"
 								onClick={(e) => addOption(e)}
-							></EmptyRadioText>
-						</EmptyRadioBox>
+							></RadioText>
+							<IoMdClose size={28} className="radioDeleteBtn space-hidden" />
+						</RadioBox>
 					</RadioWrapper>
 				</Mid>
 				<Divider />
@@ -208,10 +212,10 @@ const CheckboxForm = (props) => {
 					/>
 					<Divider orientation="vertical" flexItem />
 					<div className="formGroup">
-						<FormControlLabel
-							control={<Switch checked={checked} onChange={toggleChecked} />}
-							className="fcl"
-							label="필수"
+						<p>필수</p>
+						<Toggle
+							active={toggle}
+							setToggle={(e) => setToggle((prev) => !prev)}
 						/>
 					</div>
 				</Bottom>

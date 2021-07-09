@@ -1,22 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../App.css";
 import { RiDeleteBinLine } from "react-icons/ri";
 import styled from "styled-components";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { v4 as uuidv4 } from "uuid";
+import Toggle from "../components/Toggle";
+
+import { FormControlLabel, Switch, Divider } from "@material-ui/core";
 
 import {
-	Button,
-	Menu,
-	MenuItem,
-	FormControlLabel,
-	FormGroup,
-	Switch,
-	Divider,
-} from "@material-ui/core";
-
-import { FormBoxWrapper, FormBox } from "../styles/Form";
+	FormBoxWrapper,
+	FormBox,
+	FormBoxLeft,
+	DefaultTitle,
+	DefaultSubTitle,
+} from "../styles/Form";
 import {
 	Top,
 	Top1,
@@ -26,13 +24,36 @@ import {
 	Mid,
 	Bottom,
 	TextText,
+	DefaultTitleWrapper,
+	UserTextEffectWrapper,
+	UserTextEffectPoint,
 } from "../styles/Question";
 
 const TextForm = (props) => {
 	const question = props.question;
 	const updateQuestion = props.update;
 	const deleteQuestion = props.delete;
+	const moveMenu = props.moveMenu;
+	const box = useRef();
 
+	const [isFocusedBox, setIsFocusedBox] = useState(false);
+	const [toggle, setToggle] = useState(false);
+
+	const [isFocused, setIsFocused] = useState({
+		title: false,
+		text: false,
+		subTitle: false,
+	});
+
+	function focusHandler(state, type) {
+		const cp = { ...isFocused };
+		cp[type] = state;
+		setIsFocused(cp);
+	}
+
+	function focusBoxHandler(status) {
+		setIsFocusedBox(status);
+	}
 	const [checked, setChecked] = useState(false);
 	const toggleChecked = () => {
 		setChecked((prev) => !prev);
@@ -65,7 +86,16 @@ const TextForm = (props) => {
 	};
 
 	return (
-		<FormBoxWrapper>
+		<FormBoxWrapper
+			ref={box}
+			onFocus={() => focusBoxHandler(true)}
+			onBlur={() => focusBoxHandler(false)}
+			onClick={(e) => moveMenu(box, "text")}
+		>
+			{" "}
+			<FormBoxLeft className={isFocusedBox ? "" : "hideLeftCheck"}>
+				{/* 색처리 */}
+			</FormBoxLeft>
 			<FormBox>
 				<Top>
 					<Top1>
@@ -76,7 +106,16 @@ const TextForm = (props) => {
 								onChange={(e) => ChangeContent(e, "title")}
 							></Title>
 						</TextDiv>
-						<DropdownButton
+
+						<DropDownWrapper>
+							<DropDownItemWrapper>
+								<DropDownItem></DropDownItem>
+								<DropDownItem></DropDownItem>
+								<DropDownItem></DropDownItem>
+							</DropDownItemWrapper>
+						</DropDownWrapper>
+
+						{/* <DropdownButton
 							id="dropdown-item-button"
 							title={content.questionType}
 						>
@@ -92,7 +131,7 @@ const TextForm = (props) => {
 							<Dropdown.Item as="button" onClick={() => changeType("radio")}>
 								radio
 							</Dropdown.Item>
-						</DropdownButton>
+						</DropdownButton> */}
 					</Top1>
 					<SubTitle
 						placeholder="설명"
@@ -101,12 +140,25 @@ const TextForm = (props) => {
 					></SubTitle>
 				</Top>
 				<Mid>
-					<TextDiv>
-						<TextText
-							placeholder="단답형 텍스트"
+					<DefaultTitleWrapper>
+						<DefaultSubTitle
+							placeholder="설문지 내용"
+							type="text"
+							name="subtitle"
 							value={content.text || ""}
-						></TextText>
-					</TextDiv>
+							onChange={(e) => ChangeContent(e, "text")}
+							onFocus={(e) => focusHandler(true, "text")}
+							onBlur={(e) => focusHandler(false, "text")}
+						></DefaultSubTitle>
+						<UserTextEffectWrapper className="effectDiv"></UserTextEffectWrapper>
+						<UserTextEffectPoint
+							className={
+								isFocused.subTitle
+									? "defaultEffect effectPoint"
+									: "defaultEffect nonEffectPoint"
+							}
+						></UserTextEffectPoint>
+					</DefaultTitleWrapper>
 				</Mid>
 				<Divider />
 				<Bottom>
@@ -117,10 +169,10 @@ const TextForm = (props) => {
 					/>
 					<Divider orientation="vertical" flexItem />
 					<div className="formGroup">
-						<FormControlLabel
-							control={<Switch checked={checked} onChange={toggleChecked} />}
-							className="fcl"
-							label="필수"
+						<p>필수</p>
+						<Toggle
+							active={toggle}
+							setToggle={(e) => setToggle((prev) => !prev)}
 						/>
 					</div>
 				</Bottom>
@@ -132,6 +184,15 @@ const TextForm = (props) => {
 // const areEqual = (prevProps, nextProps) => {
 // 	return prevProps.question.uuid === nextProps.question.uuid;
 // };
+
+const DropDownWrapper = styled.div`
+	position: relative;
+	width: 10rem;
+	height: 3rem;
+	border: 1px solid red;
+`;
+const DropDownItemWrapper = styled.div``;
+const DropDownItem = styled.div``;
 
 export default TextForm;
 // export default React.memo(TextQuestion, areEqual);
