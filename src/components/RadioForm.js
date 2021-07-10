@@ -7,6 +7,11 @@ import { Dropdown, DropdownButton } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { v4 as uuidv4 } from "uuid";
 import Toggle from "../components/Toggle";
+import { ImRadioChecked } from "react-icons/im";
+import { IoMdCheckbox } from "react-icons/io";
+import { GrTextAlignFull } from "react-icons/gr";
+import { IoMdArrowDropdown } from "react-icons/io";
+import OutsideClickHandler from "react-outside-click-handler";
 
 import {
 	Button,
@@ -33,6 +38,12 @@ import {
 	EmptyRadioText,
 	EmptyRadioBox,
 	EmptryRadio,
+	DropDownText,
+	DropDownIcon,
+	DropDownWrapper,
+	DropDownItemWrapper,
+	DropDownItem,
+	DefaultDropDownItem,
 } from "../styles/Question";
 import { FormBoxWrapper, FormBox } from "../styles/Form";
 
@@ -42,6 +53,7 @@ const RadioForm = (props) => {
 	const deleteQuestion = props.delete;
 	const [disabledRadio, setDisabledRadio] = useState(0);
 	const [toggle, setToggle] = useState(false);
+	const [dropDownShow, setDropDownShow] = useState(false);
 
 	const radioRef = useRef(null);
 
@@ -114,7 +126,68 @@ const RadioForm = (props) => {
 								onChange={(e) => ChangeContent(e, "title")}
 							></Title>
 						</TextDiv>
-						<DropdownButton
+
+						<DropDownWrapper>
+							{content.questionType === "text" && (
+								<DefaultDropDownItem
+									onClick={() => setDropDownShow(!dropDownShow)}
+								>
+									<DropDownIcon>
+										<GrTextAlignFull size={25} />
+									</DropDownIcon>
+									<DropDownText>단답형 질문</DropDownText>
+									<IoMdArrowDropdown size={25} />
+								</DefaultDropDownItem>
+							)}
+							{content.questionType === "radio" && (
+								<DefaultDropDownItem
+									onClick={() => setDropDownShow(!dropDownShow)}
+								>
+									<DropDownIcon>
+										<ImRadioChecked size={25} />
+									</DropDownIcon>
+									<DropDownText>객관식 질문</DropDownText>
+									<IoMdArrowDropdown size={25} />
+								</DefaultDropDownItem>
+							)}
+							{content.questionType === "checkbox" && (
+								<DefaultDropDownItem
+									onClick={() => setDropDownShow(!dropDownShow)}
+								>
+									<DropDownIcon>
+										<IoMdCheckbox size={25} />
+									</DropDownIcon>
+									<DropDownText>체크박스</DropDownText>
+									<IoMdArrowDropdown size={25} />
+								</DefaultDropDownItem>
+							)}
+
+							<OutsideClickHandler
+								onOutsideClick={() => setDropDownShow(false)}
+							>
+								<DropDownItemWrapper isShow={dropDownShow}>
+									<DropDownItem onClick={(e) => changeType("radio")}>
+										<DropDownIcon>
+											<ImRadioChecked size={25} />
+										</DropDownIcon>
+										<DropDownText>객관식 질문</DropDownText>
+									</DropDownItem>
+									<DropDownItem onClick={(e) => changeType("checkbox")}>
+										<DropDownIcon>
+											<IoMdCheckbox size={25} />
+										</DropDownIcon>
+										<DropDownText>체크박스</DropDownText>
+									</DropDownItem>
+									<DropDownItem onClick={(e) => changeType("text")}>
+										<DropDownIcon>
+											<GrTextAlignFull size={25} />
+										</DropDownIcon>
+										<DropDownText>단답형 질문</DropDownText>
+									</DropDownItem>
+								</DropDownItemWrapper>
+							</OutsideClickHandler>
+						</DropDownWrapper>
+						{/* <DropdownButton
 							id="dropdown-item-button"
 							title={content.questionType}
 						>
@@ -130,7 +203,7 @@ const RadioForm = (props) => {
 							<Dropdown.Item as="button" onClick={() => changeType("radio")}>
 								radio
 							</Dropdown.Item>
-						</DropdownButton>
+						</DropdownButton> */}
 					</Top1>
 					<SubTitle
 						placeholder="설문지 내용"

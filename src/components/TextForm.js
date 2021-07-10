@@ -32,6 +32,12 @@ import {
 	DefaultTitleWrapper,
 	UserTextEffectWrapper,
 	UserTextEffectPoint,
+	DropDownText,
+	DropDownIcon,
+	DropDownWrapper,
+	DropDownItemWrapper,
+	DropDownItem,
+	DefaultDropDownItem,
 } from "../styles/Question";
 
 const TextForm = (props) => {
@@ -40,26 +46,17 @@ const TextForm = (props) => {
 	const deleteQuestion = props.delete;
 	const moveMenu = props.moveMenu;
 	const box = useRef();
-	const dropDownWrapper = useRef();
 
 	const [isFocusedBox, setIsFocusedBox] = useState(false);
 	const [toggle, setToggle] = useState(false);
 
 	const [dropDownShow, setDropDownShow] = useState(false);
 
-	const showDropDown = function () {
-		setDropDownShow(!dropDownShow);
-	};
 	const [isFocused, setIsFocused] = useState({
 		title: false,
 		text: false,
 		subTitle: false,
 	});
-
-	useEffect(() => {
-		const e = document.addEventListener("click");
-		console.log(e);
-	}, [showDropDown]);
 
 	function focusHandler(state, type) {
 		const cp = { ...isFocused };
@@ -99,6 +96,8 @@ const TextForm = (props) => {
 		cp["questionType"] = after;
 		setContent(cp);
 		updateQuestion("questionType", content.uuid, after);
+
+		setDropDownShow(false);
 	};
 
 	return (
@@ -123,33 +122,57 @@ const TextForm = (props) => {
 							></Title>
 						</TextDiv>
 						<DropDownWrapper>
-							<DefaultDropDownItem onClick={showDropDown}>
-								<DropDownIcon>
-									<ImRadioChecked size={25} />
-								</DropDownIcon>
-								<DropDownText>객관식 질문</DropDownText>
-								<IoMdArrowDropdown size={25} />
-							</DefaultDropDownItem>
+							{content.questionType === "text" && (
+								<DefaultDropDownItem
+									onClick={() => setDropDownShow(!dropDownShow)}
+								>
+									<DropDownIcon>
+										<GrTextAlignFull size={25} />
+									</DropDownIcon>
+									<DropDownText>단답형 질문</DropDownText>
+									<IoMdArrowDropdown size={25} />
+								</DefaultDropDownItem>
+							)}
+							{content.questionType === "radio" && (
+								<DefaultDropDownItem
+									onClick={() => setDropDownShow(!dropDownShow)}
+								>
+									<DropDownIcon>
+										<ImRadioChecked size={25} />
+									</DropDownIcon>
+									<DropDownText>객관식 질문</DropDownText>
+									<IoMdArrowDropdown size={25} />
+								</DefaultDropDownItem>
+							)}
+							{content.questionType === "checkbox" && (
+								<DefaultDropDownItem
+									onClick={() => setDropDownShow(!dropDownShow)}
+								>
+									<DropDownIcon>
+										<IoMdCheckbox size={25} />
+									</DropDownIcon>
+									<DropDownText>체크박스</DropDownText>
+									<IoMdArrowDropdown size={25} />
+								</DefaultDropDownItem>
+							)}
+
 							<OutsideClickHandler
 								onOutsideClick={() => setDropDownShow(false)}
 							>
-								<DropDownItemWrapper
-									ref={dropDownWrapper}
-									isShow={dropDownShow}
-								>
-									<DropDownItem>
+								<DropDownItemWrapper isShow={dropDownShow}>
+									<DropDownItem onClick={(e) => changeType("radio")}>
 										<DropDownIcon>
 											<ImRadioChecked size={25} />
 										</DropDownIcon>
 										<DropDownText>객관식 질문</DropDownText>
 									</DropDownItem>
-									<DropDownItem>
+									<DropDownItem onClick={(e) => changeType("checkbox")}>
 										<DropDownIcon>
 											<IoMdCheckbox size={25} />
 										</DropDownIcon>
 										<DropDownText>체크박스</DropDownText>
 									</DropDownItem>
-									<DropDownItem>
+									<DropDownItem onClick={(e) => changeType("text")}>
 										<DropDownIcon>
 											<GrTextAlignFull size={25} />
 										</DropDownIcon>
@@ -228,61 +251,6 @@ const TextForm = (props) => {
 // const areEqual = (prevProps, nextProps) => {
 // 	return prevProps.question.uuid === nextProps.question.uuid;
 // };
-
-const DropDownText = styled.div`
-	flex: 1;
-`;
-
-const DropDownIcon = styled.div`
-	width: 2rem;
-	margin-right: 0.5rem;
-`;
-const DropDownWrapper = styled.div`
-	border: 1px solid #dadce0;
-	border-radius: 3px;
-	position: relative;
-	background-color: white;
-	width: 12.25rem;
-	height: 3.75rem;
-`;
-
-const DropDownItemWrapper = styled.div`
-	position: absolute;
-	height: 10.6rem;
-	top: -50px;
-	border: 1px solid #dadce0;
-
-	box-shadow: 10px 10px 20px 1px #e3e3e3;
-	z-index: 1;
-	display: ${(props) => (props.isShow ? "block" : "none")};
-`;
-const DropDownItem = styled.div`
-	border-radius: 3px;
-	background-color: white;
-	width: 12rem;
-	height: 3.5rem;
-	display: flex;
-	align-items: center;
-	padding: 0 1rem;
-	justify-content: space-between;
-	font-size: 0.85rem;
-
-	&:hover {
-		background-color: #e3e3e3;
-	}
-`;
-
-const DefaultDropDownItem = styled.div`
-	border-radius: 3px;
-	background-color: white;
-	width: 12rem;
-	height: 3.5rem;
-	display: flex;
-	align-items: center;
-	padding: 0 1rem;
-	justify-content: space-between;
-	font-size: 0.85rem;
-`;
 
 export default TextForm;
 // export default React.memo(TextQuestion, areEqual);

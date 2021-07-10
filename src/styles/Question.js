@@ -333,6 +333,61 @@ const UserTextEffectWrapper = styled.div`
 
 const UserTextEffectPoint = styled.div``;
 
+const DropDownText = styled.div`
+	flex: 1;
+`;
+
+const DropDownIcon = styled.div`
+	width: 2rem;
+	margin-right: 0.5rem;
+`;
+const DropDownWrapper = styled.div`
+	border: 1px solid #dadce0;
+	border-radius: 3px;
+	position: relative;
+	background-color: white;
+	width: 12.25rem;
+	height: 3.75rem;
+`;
+
+const DropDownItemWrapper = styled.div`
+	position: absolute;
+	height: 10.6rem;
+	top: -50px;
+	border: 1px solid #dadce0;
+
+	box-shadow: 10px 10px 20px 1px #e3e3e3;
+	z-index: 1;
+	display: ${(props) => (props.isShow ? "block" : "none")};
+`;
+const DropDownItem = styled.div`
+	border-radius: 3px;
+	background-color: white;
+	width: 12rem;
+	height: 3.5rem;
+	display: flex;
+	align-items: center;
+	padding: 0 1rem;
+	justify-content: space-between;
+	font-size: 0.85rem;
+
+	&:hover {
+		background-color: #e3e3e3;
+	}
+`;
+
+const DefaultDropDownItem = styled.div`
+	border-radius: 3px;
+	background-color: white;
+	width: 12rem;
+	height: 3.5rem;
+	display: flex;
+	align-items: center;
+	padding: 0 1rem;
+	justify-content: space-between;
+	font-size: 0.85rem;
+`;
+
 export {
 	UserTextWrapper,
 	DefaultTitleWrapper,
@@ -362,4 +417,10 @@ export {
 	UserText,
 	UserRadio,
 	UserCheckbox,
+	DropDownText,
+	DropDownIcon,
+	DropDownWrapper,
+	DropDownItemWrapper,
+	DropDownItem,
+	DefaultDropDownItem,
 };
