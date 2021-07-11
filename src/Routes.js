@@ -6,6 +6,7 @@ import FinalGoogleForm from "./pages/FinalGoogleForm";
 import GoogleFormUser from "./pages/GoogleFormUser";
 import GoogleFormReport from "./pages/GoogleFormReport";
 import GoogleFormList from "./pages/GoogleFormList";
+import GoogleFormComplete from "./pages/GoogleFormComplete";
 
 // import SignUp from "./pages/SignUp";
 
@@ -18,6 +19,7 @@ class Routes extends React.Component {
 					<Route exact path="/form" component={NewGoogleForm} />
 					{/* form/{uuid}형식으로  url을 만들 수 있음 */}
 					<Route exact path="/form/:uuid" component={GoogleFormUser} />
+					<Route exact path="/view/:uuid" component={GoogleFormComplete} />
 					<Route path="/report" component={GoogleFormReport} />
 					<Route path="/list" component={GoogleFormList} />
 				</Switch>

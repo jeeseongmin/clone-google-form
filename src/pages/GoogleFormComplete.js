@@ -15,7 +15,7 @@ import {
 	FormBoxTop,
 } from "../styles/Form";
 import { v4 as uuidv4 } from "uuid";
-import TextQuestion from "../components/TextQuestion";
+import TextAnswer from "../components/TextAnswer";
 import CheckboxQuestion from "../components/CheckboxQuestion";
 import RadioQuestion from "../components/RadioQuestion";
 import { Layout } from "../styles/Layout";
@@ -25,8 +25,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Answer from "../components/Answer";
 
-const GoogleFormUser = () => {
+const GoogleFormComplete = () => {
 	const { uuid } = useParams();
 	const history = useHistory();
 
@@ -36,7 +37,8 @@ const GoogleFormUser = () => {
 	const escFunction = useCallback((event) => {
 		if (event.keyCode === 27) {
 			//Do whatever when esc is pressed
-			handleClickOpen();
+			// handleClickOpen();
+			history.push("/");
 		}
 	}, []);
 
@@ -49,22 +51,50 @@ const GoogleFormUser = () => {
 	}, []);
 
 	useEffect(() => {
-		fetchData(uuid);
+		fetchAnswer(uuid);
+		console.log(answer);
+		// fetchQuestion(answer[0].uidOfQuestion);
 	}, []);
 
-	const fetchData = async function (uuid) {
-		const ref = db.collection("questions");
-		const questionRef = await ref.where("uuid", "==", uuid).get();
-		if (questionRef.empty) {
-			alert("No Matching documents");
+	const fetchAnswer = async function (uuid) {
+		try {
+			const querySnapshot = await db
+				.collection("answers")
+				.where("uuid", "==", uuid)
+				.get();
+			setAnswer(querySnapshot.docs.map((doc) => doc.data()));
+		} catch (error) {
+			alert("No Matching documents1");
 			history.push("/");
 		}
-
-		questionRef.forEach((doc) => {
-			console.log(doc.id, "=>", doc.data());
-			setQuestion(doc.data());
-		});
 	};
+
+	const fetchQuestion = async function (qid) {
+		try {
+			const querySnapshot2 = await db
+				.collection("questions")
+				.where("uuid", "==", qid)
+				.get();
+			// setQuestion(querySnapshot2.docs.map((doc) => doc.data()));
+			const questionArray = querySnapshot2.docs.map((doc) => doc.data());
+			setQuestion(questionArray[0]);
+			console.log("question complete");
+		} catch (error) {
+			alert("No Matching documents2");
+			history.push("/");
+		}
+	};
+
+	useEffect(() => {
+		console.log("add Answer");
+		console.log(answer);
+		if (answer.length === 1) {
+			const qid = answer[0].uidOfQuestion;
+			fetchQuestion(qid);
+		}
+		// const qid = answer[0].uidOfQuestion;
+		// console.log(qid);
+	}, [answer]);
 
 	// modal 이벤트
 	const handleClickOpen = () => {
@@ -76,37 +106,17 @@ const GoogleFormUser = () => {
 	};
 
 	const goBack = function () {
+		// console.log(question);
 		history.push("/");
 	};
 
-	const submit = async function () {
-		const payload = {
-			uidOfQuestion: question.uuid,
-			answer: answer,
-			uuid: uuidv4(),
-		};
-		try {
-			await db.collection("answers").add(payload);
-			console.log("complet submit by user.");
-			alert("작성이 완료되었습니다.");
-			history.push("/");
-		} catch (error) {
-			console.log(error);
-			Sentry.captureException(error);
-
-			alert("에러입니다.");
-		}
-
-		console.log(answer);
-	};
-
-	const updateRadioQuestionAnswer = (questionUuid, optionUuid) => {
-		const cp = { ...answer };
-		cp[questionUuid] = optionUuid;
-		setAnswer(cp);
-		console.log("answer");
-		console.log(answer);
-	};
+	// const updateRadioQuestionAnswer = (questionUuid, optionUuid) => {
+	// 	const cp = { ...answer };
+	// 	cp[questionUuid] = optionUuid;
+	// 	setAnswer(cp);
+	// 	console.log("answer");
+	// 	console.log(answer);
+	// };
 
 	return (
 		<Layout>
@@ -119,7 +129,7 @@ const GoogleFormUser = () => {
 				<DialogTitle id="alert-dialog-title">{"Back"}</DialogTitle>
 				<DialogContent>
 					<DialogContentText id="alert-dialog-description">
-						현재 폼은 저장되지 않습니다. 뒤로가시겠습니까?
+						뒤로가시겠습니까?
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
@@ -137,6 +147,7 @@ const GoogleFormUser = () => {
 					<TopBoxWrapper>
 						<FormBoxTop>{/* 색처리 */}</FormBoxTop>
 						<FormBox>
+							<div className="notEditText">응답은 수정할 수 없습니다.</div>
 							<UserDefaultTitle>{question.title}</UserDefaultTitle>
 							<UserDefaultSubTitle>{question.subtitle}</UserDefaultSubTitle>
 							<UserDefaultRed>* 필수항목</UserDefaultRed>
@@ -144,34 +155,12 @@ const GoogleFormUser = () => {
 					</TopBoxWrapper>
 					{question.questions &&
 						question.questions.map((element, index) => {
-							if (element.questionType === "text") {
-								return (
-									<TextQuestion
-										key={element.uuid}
-										question={element}
-										updateRadioQuestionAnswer={updateRadioQuestionAnswer}
-									/>
-								);
-							} else if (element.questionType === "radio") {
-								return (
-									<RadioQuestion
-										key={element.uuid}
-										question={element}
-										updateRadioQuestionAnswer={updateRadioQuestionAnswer}
-									/>
-								);
-							} else if (element.questionType === "checkbox") {
-								return (
-									<CheckboxQuestion
-										key={element.uuid}
-										question={element}
-										updateRadioQuestionAnswer={updateRadioQuestionAnswer}
-									/>
-								);
-							}
+							return (
+								<Answer key={element.uuid} question={element} answer={answer} />
+							);
 						})}
 					<SubmitWrapper>
-						<SubmitBtn onClick={submit}>제출</SubmitBtn>
+						{/* <SubmitBtn onClick={submit}>제출</SubmitBtn> */}
 					</SubmitWrapper>
 				</FormCenter>
 			</FormContainer>
@@ -203,4 +192,4 @@ const Opac = styled.div`
 	opacity: 1;
 `;
 
-export default GoogleFormUser;
+export default GoogleFormComplete;

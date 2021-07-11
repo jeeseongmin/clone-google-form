@@ -87,7 +87,12 @@
 	transform: translateX(-50%);
 	left: 50%;
 }
-
+.notEditText {
+	margin-top: 0.75rem;
+	margin-bottom: 0.75rem;
+	font-size: 0.75rem;
+	color: #70757a;
+}
 .effectPoint {
 	/* 애니메이션이 지속되는 시간 */
 	animation-duration: 0.3s;

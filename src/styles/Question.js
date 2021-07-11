@@ -44,7 +44,6 @@ const TextDiv = styled.div`
 
 const Title = styled.input`
 	border-style: none;
-
 	flex-shrink: 1;
 	background-color: transparent;
 	border: none;
@@ -52,7 +51,7 @@ const Title = styled.input`
 	font: 400 16px Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
 	min-width: 0%;
 	outline: none;
-	padding: 0.5em 0;
+	padding: 1em 0;
 	z-index: 0;
 	font-size: 1.25rem;
 	width: 100%;
