@@ -58,7 +58,7 @@ Form을 작성했다면, Main 화면에서 보았던 Form 확인 버튼을 눌�
 
 [응답 보기]는 다음과 같이 Form에 대해 작성된 응답 리스트를 볼 수 있습니다.
 
-## ![Response List](https://user-images.githubusercontent.com/47960777/156680498-780b89ce-ed16-47af-92e9-e44e3b0cb761.png)
+![Response List](https://user-images.githubusercontent.com/47960777/156680498-780b89ce-ed16-47af-92e9-e44e3b0cb761.png)
 
 우측에 링크 아이콘을 클릭하면 아래와 같이 작성된 응답을 확인할 수 있습니다.
 
@@ -68,14 +68,7 @@ Form을 작성했다면, Main 화면에서 보았던 Form 확인 버튼을 눌�
 
 Form을 만드는 페이지에서 작성을 완료했다면, 2번에서 이야기한 것처럼, 링크를 통해 내가 만든 Form에 접근할 수 있습니다.
 
-<div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
-	<div>
-		<img src ="https://user-images.githubusercontent.com/47960777/156680397-c5cdc146-c462-41fb-af3f-0e9d05999a4e.png" alt="My Form 1">
-		</div>
-	<div>
-		<img src="https://user-images.githubusercontent.com/47960777/156701577-7819780b-7cc2-4274-8cd1-3f3636528e6c.png" alt="My Form 2">
-	</div>
-</div>
+|![Form 1](https://user-images.githubusercontent.com/47960777/156680397-c5cdc146-c462-41fb-af3f-0e9d05999a4e.png)|![Form 2](https://user-images.githubusercontent.com/47960777/156701577-7819780b-7cc2-4274-8cd1-3f3636528e6c.png)|
 
 작성 후에 제출 버튼을 클릭하면, 응답이 제출됩니다.
 
@@ -190,14 +183,7 @@ REACT_APP_appId = "something"
 
 주의할 점 : 원래는 이렇게 사진으로도 공개하면 프로젝트를 누구나 접근할 수 있게 됩니다. 해당 프로젝트는 삭제할 예정입니다.
 
-<div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
-<div>
-	<img src ="https://user-images.githubusercontent.com/47960777/156705270-f511790d-9b15-40b7-b8e1-881c00d70438.png" alt="My Form 1">
-	</div>
-<div>
-	<img src="https://user-images.githubusercontent.com/47960777/156705290-95ed8c71-0480-4fe3-87b2-4c53a5008d36.png" alt="My Form 2">
-</div>
-</div>
+|![](https://user-images.githubusercontent.com/47960777/156705270-f511790d-9b15-40b7-b8e1-881c00d70438.png)|![](https://user-images.githubusercontent.com/47960777/156705290-95ed8c71-0480-4fe3-87b2-4c53a5008d36.png)|
 
 **(2) Firestore Database 생성**
 
@@ -211,25 +197,11 @@ REACT_APP_appId = "something"
 
 그러면 Database가 정상적으로 생성되는 것을 볼 수 있습니다.
 
-<div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
-   	<div>
-   		<img src ="https://user-images.githubusercontent.com/47960777/156704689-5f3b173e-7ebc-4409-a99e-cd3892bff83d.png" alt="My Form 1">
-   		</div>
-   	<div>
-   		<img src="https://user-images.githubusercontent.com/47960777/156704942-be85a425-f2fc-4117-b97a-4439a9e89500.png" alt="My Form 2">
-   	</div>
-</div>
+|![My Form 1](https://user-images.githubusercontent.com/47960777/156704689-5f3b173e-7ebc-4409-a99e-cd3892bff83d.png)|![My Form 2](https://user-images.githubusercontent.com/47960777/156704942-be85a425-f2fc-4117-b97a-4439a9e89500.png)|
 
 [규칙]도 다음과 같이 `false -> true`로 수정해줘야 합니다.
 
-<div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
-   	<div>
-   		<img src ="https://user-images.githubusercontent.com/47960777/156704994-ff3f22fc-a5d5-465f-9d75-69731d8676f7.png" alt="My Form 1">
-   		</div>
-   	<div>
-   		<img src="https://user-images.githubusercontent.com/47960777/156705031-8c52bda8-d5c2-4164-b9eb-79a76c8d87f7.png" alt="My Form 2">
-   	</div>
-</div>
+|![My Form 1](https://user-images.githubusercontent.com/47960777/156704994-ff3f22fc-a5d5-465f-9d75-69731d8676f7.png)|![My Form 2](https://user-images.githubusercontent.com/47960777/156705031-8c52bda8-d5c2-4164-b9eb-79a76c8d87f7.png)|
 
 위와 같이 모두 적용했다면, Form이 정상적으로 생성, 저장, 불러오기, 작성하기가 가능해집니다.
 
