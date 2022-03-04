@@ -17,268 +17,287 @@ import { GoListOrdered } from "react-icons/go";
 import { IoWarningOutline } from "react-icons/io5";
 
 const useStyles = makeStyles((theme) => ({
-	modal: {
-		display: "flex",
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	paper: {
-		backgroundColor: theme.palette.background.paper,
-		border: "2px solid #000",
-		boxShadow: theme.shadows[5],
-		padding: theme.spacing(2, 4, 3),
-	},
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
 }));
 const Home = () => {
-	const classes = useStyles();
-	const [open, setOpen] = useState(false);
-	const [showList, setShowList] = useState(false);
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const [showList, setShowList] = useState(false);
 
-	const [formLists, setFormLists] = useState([]);
-	const [completeList, setCompleteList] = useState([]);
+  const [formLists, setFormLists] = useState([]);
+  const [completeList, setCompleteList] = useState([]);
 
-	useEffect(() => {
-		let getFormList = async function () {
-			try {
-				const querySnapshot = await db.collection("questions").get();
-				setFormLists(querySnapshot.docs.map((doc) => doc.data()));
-			} catch (error) {
-				console.log(error);
-			}
-		};
-		getFormList();
-	}, []);
+  useEffect(() => {
+    let getFormList = async function () {
+      try {
+        const querySnapshot = await db.collection("questions").get();
+        setFormLists(querySnapshot.docs.map((doc) => doc.data()));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getFormList();
+  }, []);
 
-	const handleOpen = () => {
-		setOpen(true);
-		setShowList(false);
-		console.log(formLists);
-	};
+  const handleOpen = () => {
+    setOpen(true);
+    setShowList(false);
+  };
 
-	const handleClose = () => {
-		setOpen(false);
-	};
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-	const history = useHistory();
+  const history = useHistory();
 
-	const moveLink = function (link) {
-		window.open(link, "_self");
-	};
+  const moveLink = function (link) {
+    window.open(link, "_self");
+  };
 
-	const getCompleteList = function (qid) {
-		let getCompleteList = async function () {
-			try {
-				const querySnapshot = await db
-					.collection("answers")
-					.where("uidOfQuestion", "==", qid)
-					.get();
-				setCompleteList(querySnapshot.docs.map((doc) => doc.data()));
-				setShowList(true);
-			} catch (error) {
-				console.log(error);
-			}
-		};
+  const getCompleteList = function (qid) {
+    let getCompleteList = async function () {
+      try {
+        const querySnapshot = await db
+          .collection("answers")
+          .where("uidOfQuestion", "==", qid)
+          .get();
+        setCompleteList(querySnapshot.docs.map((doc) => doc.data()));
+        setShowList(true);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-		getCompleteList();
-		console.log(qid);
-		console.log(completeList);
-	};
+    getCompleteList();
+  };
 
-	return (
-		<Layout>
-			<Modal
-				aria-labelledby="transition-modal-title"
-				aria-describedby="transition-modal-description"
-				className={classes.modal}
-				open={open}
-				onClose={handleClose}
-				closeAfterTransition
-				BackdropComponent={Backdrop}
-				BackdropProps={{
-					timeout: 500,
-				}}
-			>
-				<Fade in={open}>
-					<div className={classes.paper}>
-						<h2 id="transition-modal-title">Form List</h2>
-						<p>해당 form을 복사하시려면 우측 버튼을 눌러주세요</p>
-						<FormListTopWrapper>
-							{!showList && (
-								<FormListWrapper>
-									{formLists.map((element, index) => {
-										const url = "http://localhost:3000/form/" + element.uuid;
-										return (
-											<div>
-												<FormList>
-													<FormTitle>
-														<FormTitleText>{element.title}</FormTitleText>
-													</FormTitle>
-													<CopyBtn>
-														<CopyToClipboard
-															text={url}
-															onCopy={() => alert("copy!")}
-														>
-															<FaCopy size={22} title="copy" />
-														</CopyToClipboard>
-													</CopyBtn>
-													<CopyBtn>
-														<AiOutlineLink
-															size={22}
-															title="link"
-															onClick={() => moveLink(url)}
-														/>
-													</CopyBtn>
-													<CopyBtn>
-														<AiOutlineRight
-															size={22}
-															title="list"
-															onClick={() => getCompleteList(element.uuid)}
-														/>
-													</CopyBtn>
-												</FormList>
-												<Divider />
-											</div>
-										);
-									})}
-								</FormListWrapper>
-							)}
-							{showList && (
-								<FormListWrapper>
-									<div>
-										<FormList>
-											<CopyBtn>
-												<AiOutlineLeft
-													size={22}
-													title="back"
-													onClick={() => setShowList(false)}
-												/>
-											</CopyBtn>
-											<FormTitle>
-												<FormTitleText>Form List</FormTitleText>
-											</FormTitle>
-										</FormList>
-										<Divider />
-										{}
-									</div>
-									{completeList.length === 0 && (
-										<div>
-											<FormList>
-												<CopyBtn>
-													<IoWarningOutline size={22} title="warning" />
-												</CopyBtn>
-												<FormTitle>
-													<FormTitleText>등록된 응답이 없습니다.</FormTitleText>
-												</FormTitle>
-											</FormList>
-											<Divider />
-											{}
-										</div>
-									)}
+  return (
+    <Layout>
+      <Modal
+        aria-labelledby='transition-modal-title'
+        aria-describedby='transition-modal-description'
+        className={classes.modal}
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}>
+        <Fade in={open}>
+          <div className={classes.paper}>
+            <h2 id='transition-modal-title'>Form List</h2>
+            <p>해당 form을 복사하시려면 우측 버튼을 눌러주세요</p>
+            <FormListTopWrapper>
+              {!showList && (
+                <FormListWrapper>
+                  {formLists.map((element, index) => {
+                    const url = "http://localhost:3000/form/" + element.uuid;
+                    return (
+                      <div>
+                        <FormList>
+                          <FormTitle>
+                            <FormTitleText>{element.title}</FormTitleText>
+                          </FormTitle>
+                          <CopyBtn>
+                            <CopyToClipboard
+                              text={url}
+                              onCopy={() => alert("copy!")}>
+                              <FaCopy size={22} title='copy' />
+                            </CopyToClipboard>
+                          </CopyBtn>
+                          <CopyBtn>
+                            <AiOutlineLink
+                              size={22}
+                              title='link'
+                              onClick={() => moveLink(url)}
+                            />
+                          </CopyBtn>
+                          <CopyBtn>
+                            <AiOutlineRight
+                              size={22}
+                              title='list'
+                              onClick={() => getCompleteList(element.uuid)}
+                            />
+                          </CopyBtn>
+                        </FormList>
+                        <Divider />
+                      </div>
+                    );
+                  })}
+                </FormListWrapper>
+              )}
+              {showList && (
+                <FormListWrapper>
+                  <div>
+                    <FormList>
+                      <CopyBtn>
+                        <AiOutlineLeft
+                          size={22}
+                          title='back'
+                          onClick={() => setShowList(false)}
+                        />
+                      </CopyBtn>
+                      <FormTitle>
+                        <FormTitleText>Form List</FormTitleText>
+                      </FormTitle>
+                    </FormList>
+                    <Divider />
+                    {}
+                  </div>
+                  {completeList.length === 0 && (
+                    <div>
+                      <FormList>
+                        <CopyBtn>
+                          <IoWarningOutline size={22} title='warning' />
+                        </CopyBtn>
+                        <FormTitle>
+                          <FormTitleText>등록된 응답이 없습니다.</FormTitleText>
+                        </FormTitle>
+                      </FormList>
+                      <Divider />
+                      {}
+                    </div>
+                  )}
 
-									{completeList.map((element, index) => {
-										const url = "http://localhost:3000/view/" + element.uuid;
-										return (
-											<div>
-												<FormList>
-													<FormTitle>
-														<FormTitleText>응답 {index}</FormTitleText>
-													</FormTitle>
-													<CopyBtn>
-														<AiOutlineLink
-															size={22}
-															title="link"
-															onClick={() => moveLink(url)}
-														/>
-													</CopyBtn>
-												</FormList>
-												<Divider />
-												{}
-											</div>
-										);
-									})}
-								</FormListWrapper>
-							)}
-						</FormListTopWrapper>
-					</div>
-				</Fade>
-			</Modal>
+                  {completeList.map((element, index) => {
+                    const url = "http://localhost:3000/view/" + element.uuid;
+                    return (
+                      <div>
+                        <FormList>
+                          <FormTitle>
+                            <FormTitleText>응답 {index}</FormTitleText>
+                          </FormTitle>
+                          <CopyBtn>
+                            <AiOutlineLink
+                              size={22}
+                              title='link'
+                              onClick={() => moveLink(url)}
+                            />
+                          </CopyBtn>
+                        </FormList>
+                        <Divider />
+                        {}
+                      </div>
+                    );
+                  })}
+                </FormListWrapper>
+              )}
+            </FormListTopWrapper>
+          </div>
+        </Fade>
+      </Modal>
 
-			<Container>
-				<Button
-					variant="contained"
-					color="primary"
-					onClick={() => history.push("/form")}
-				>
-					Make Form
-				</Button>
-				<Button
-					variant="contained"
-					color="secondary"
-					onClick={() => handleOpen()}
-				>
-					Form List
-				</Button>
-			</Container>
-		</Layout>
-	);
+      <Container>
+        <h3>Google Form Clone Project</h3>
+        <BoxWrapper>
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={() => history.push("/form")}>
+            Start To Make Form
+          </Button>
+          <Button
+            variant='contained'
+            color='secondary'
+            onClick={() => handleOpen()}>
+            Let's Check Our Form
+          </Button>
+          <CreatedBox>
+            <span>created by peration</span>
+          </CreatedBox>
+        </BoxWrapper>
+      </Container>
+    </Layout>
+  );
 };
 
 export default Home;
 
+const CreatedBox = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: end;
+  color: #d3d3d3;
+  margin: 0;
+  padding: 0;
+`;
+
+const BoxWrapper = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 8rem;
+`;
+
 const FormListTopWrapper = styled.div`
-	overflow-x: scroll;
-	display: flex;
-	flex-direction: row;
-	width: 23.25rem;
-	transition: display 0.5s;
-	overflow-x: hidden;
+  overflow-x: scroll;
+  display: flex;
+  flex-direction: row;
+  width: 23.25rem;
+  transition: display 0.5s;
+  overflow-x: hidden;
+  font-family: "dohyeon";
 `;
 
 const FormListWrapper = styled.div`
-	display: flex;
-	justify-content: flex-start;
-	flex-direction: column;
-	height: 20rem;
-	width: 23.25rem;
-	border: 1px solid #e3e3e3;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  height: 20rem;
+  width: 23.25rem;
+  border: 1px solid #e3e3e3;
 `;
 
 const FormTitle = styled.div`
-	width: 90%;
-	display: flex;
-	align-items: center;
-	padding: 0 1rem;
-	font-weight: bold;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  font-weight: bold;
 `;
 const FormTitleText = styled.div`
-	width: 100%;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	word-wrap: normal;
-	overflow: hidden;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  overflow: hidden;
 `;
 
 const FormList = styled.div`
-	display: flex;
-	justify-content: space-between;
-	flex-direction: row;
-	width: 23rem;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 23rem;
 `;
 
 const CopyBtnBox = styled.div`
-	width: 100%;
-	background-color: white;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 const CopyBtn = styled.button`
-	width: 3rem;
-	height: 3rem;
-	background-color: white;
-	border-radius: 20px;
-	border-style: none;
-	&:hover {
-		background-color: #e3e3e3;
-	}
+  width: 3rem;
+  height: 3rem;
+  background-color: white;
+  border-radius: 20px;
+  border-style: none;
+  &:hover {
+    background-color: #e3e3e3;
+  }
 `;

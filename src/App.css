@@ -1,202 +1,202 @@
 :root {
-	--main-color: #83c9e7;
-	--main2-color: #4a88da;
-	--main3-color: #82c8e6;
-	--background-color: #e4f3fa;
-	--red-color: #ff4040;
+  --main-color: #83c9e7;
+  --main2-color: #4a88da;
+  --main3-color: #82c8e6;
+  --background-color: #e4f3fa;
+  --red-color: #ff4040;
 }
 
 #dropdown-item-button {
-	width: 8rem;
-	height: 2rem;
-	text-align: right;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	background-color: white;
-	border-color: #e3e3e3;
-	color: black;
-	margin-right: 2rem;
+  width: 8rem;
+  height: 2rem;
+  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  border-color: #e3e3e3;
+  color: black;
+  margin-right: 2rem;
 }
 
 #dropdown-item-button:hover {
-	border-style: none;
+  border-style: none;
 }
 
 .divider {
-	/* margin: 0 3rem; */
-	margin-left: 1rem;
-	margin-right: 1rem;
+  /* margin: 0 3rem; */
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .fcl {
-	margin: 0;
+  margin: 0;
 }
 .formGroup {
-	height: 100%;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	margin-left: 0.75rem;
-	font-size: 1rem;
-	margin-right: 0.75rem;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 0.75rem;
+  font-size: 1rem;
+  margin-right: 0.75rem;
 }
 .formGroup > p {
-	padding: 0;
-	margin: 0.5rem 1rem;
-	/* margin-right: 0.5rem; */
+  padding: 0;
+  margin: 0.5rem 1rem;
+  /* margin-right: 0.5rem; */
 }
 .deleteBtn {
-	margin: 0 0.75rem;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-left: 0.5rem;
+  margin: 0 0.75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 0.5rem;
 }
 .deleteBtn {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .radioDeleteBtn {
-	margin-right: 1.75em;
+  margin-right: 1.75em;
 }
 
 /* 이 부분이 focus event */
 
 .effectDiv {
-	position: absolute;
-	width: 18rem;
-	height: 1px;
-	bottom: -2px;
-	left: 0px;
-	margin: 0;
-	user-select: none;
+  position: absolute;
+  width: 18rem;
+  height: 1px;
+  bottom: -2px;
+  left: 0px;
+  margin: 0;
+  user-select: none;
 }
 
 .defaultEffect {
-	position: absolute;
-	background-color: rgb(103, 58, 183);
-	bottom: -2px;
-	left: 0px;
-	height: 2px;
-	margin: 0;
-	transform: translateX(-50%);
-	left: 50%;
+  position: absolute;
+  background-color: rgb(103, 58, 183);
+  bottom: -2px;
+  left: 0px;
+  height: 2px;
+  margin: 0;
+  transform: translateX(-50%);
+  left: 50%;
 }
 .nonEffectPoint {
-	transform: translateX(-50%);
-	left: 50%;
+  transform: translateX(-50%);
+  left: 50%;
 }
 .notEditText {
-	margin-top: 0.75rem;
-	margin-bottom: 0.75rem;
-	font-size: 0.75rem;
-	color: #70757a;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+  color: #70757a;
 }
 .effectPoint {
-	/* 애니메이션이 지속되는 시간 */
-	animation-duration: 0.3s;
-	/* 애니메이션이 부드러워지는 속성 */
-	animation-timing-function: ease;
-	/* 
+  /* 애니메이션이 지속되는 시간 */
+  animation-duration: 0.3s;
+  /* 애니메이션이 부드러워지는 속성 */
+  animation-timing-function: ease;
+  /* 
 		none : 아무것도 지정되지 않음
 		forwards : 100%에 도달하면 유지
 		backwards : 애니메이션이 시작되기 전에 미리 스타일 적용
 		both : forwards, backwards 둘 다 적용
 	*/
-	animation-fill-mode: forwards;
-	/* 이름이 지정되면 해당 이름과 일치하는 키 프레임이 동작 */
-	animation-name: underline;
+  animation-fill-mode: forwards;
+  /* 이름이 지정되면 해당 이름과 일치하는 키 프레임이 동작 */
+  animation-name: underline;
 }
 
 @keyframes underline {
-	0% {
-		width: 0;
-	}
-	100% {
-		width: 100%;
-	}
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
 }
 
 .ggFormIconWrapper {
-	width: 3rem;
-	height: 3rem;
-	margin: 0 1rem;
+  width: 3rem;
+  height: 3rem;
+  margin: 0 1rem;
 }
 
 .ggForm {
-	width: 100%;
+  width: 100%;
 }
 
 .NewFormDefaultTitle {
-	border-bottom: none !important;
-	background-color: white !important;
+  border-bottom: none !important;
+  background-color: white !important;
 }
 .NewFormDefaultTitle:visited {
-	background-color: white !important;
+  background-color: white !important;
 }
 
 .NewFormDefaultTitleWrapper {
-	margin-top: 1.75rem;
-	padding: 0.5rem 0;
+  margin-top: 1.75rem;
+  padding: 0.5rem 0;
 }
 
 .hideLeftCheck {
-	display: hidden !important;
-	background-color: white !important;
+  display: hidden !important;
+  background-color: white !important;
 }
 
 .space-hidden {
-	visibility: hidden;
+  visibility: hidden;
 }
 
 /* Toggle 슬라이더 */
 
 .toggleContainer {
-	cursor: pointer;
-	position: relative;
-	height: 20px;
-	width: 30px;
+  cursor: pointer;
+  position: relative;
+  height: 20px;
+  width: 30px;
 }
 
 .toggleContainer.active {
-	position: relative;
+  position: relative;
 }
 
 .toggleBar {
-	border-color: rgb(225, 216, 241);
-	border: 7px solid rgb(225, 216, 241);
-	background-color: rgb(225, 216, 241);
-	border-radius: 7px;
-	position: absolute;
-	top: 3px;
-	width: 28px;
+  border-color: rgb(225, 216, 241);
+  border: 7px solid rgb(225, 216, 241);
+  background-color: rgb(225, 216, 241);
+  border-radius: 7px;
+  position: absolute;
+  top: 3px;
+  width: 28px;
 }
 
 .toggleCircle {
-	border-color: rgb(103, 58, 183);
-	color: rgba(255, 255, 255, 1);
-	border: 10px solid #fafafa;
-	transition: border-color 0.3s linear;
-	position: absolute;
-	border-radius: 100%;
-	box-shadow: 0 1px 3px rgba(0 0 0 /40%);
+  border-color: rgb(103, 58, 183);
+  color: rgba(255, 255, 255, 1);
+  border: 10px solid #fafafa;
+  transition: border-color 0.3s linear;
+  position: absolute;
+  border-radius: 100%;
+  box-shadow: 0 1px 3px rgba(0 0 0 /40%);
 }
 
 .toggleCircle.active {
-	border-color: rgb(103, 58, 183);
-	border: 10px solid rgb(103, 58, 183);
-	position: absolute;
-	border-radius: 100%;
-	box-shadow: 0 1px 3px rgba(0 0 0 /40%);
+  border-color: rgb(103, 58, 183);
+  border: 10px solid rgb(103, 58, 183);
+  position: absolute;
+  border-radius: 100%;
+  box-shadow: 0 1px 3px rgba(0 0 0 /40%);
 }
 
 .toggleCircleWrapper {
-	cursor: pointer;
-	transition: 0.2s all linear;
-	transform: translate(-7px);
+  cursor: pointer;
+  transition: 0.2s all linear;
+  transform: translate(-7px);
 }
 
 .toggleCircleWrapper.active {
-	transform: translate(17px);
+  transform: translate(17px);
 }
