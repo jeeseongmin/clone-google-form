@@ -1,172 +1,306 @@
-# Google Form with React
+# 📄 Google Form Clone Project
 
-## 일주일 계획
+## **🎈 프로젝트 소개**
 
-### 7월 5일 (월)
+---
 
-- AWS Router 53 도메인 구매
-- page 및 state 설계
-- 기본 UI 구성
-- README 파일 작성
+Google의 Google Form을 Clone해서 만들어보는 프로젝트입니다.
 
-### 7월 6일 (화)
+해당 프로젝트는 원래 AWS 환경에서 누구나 접근할 수 있도록 도메인을 구입하여 적용하는 방향으로 기획되었으나, 지속적인 관리가 어렵기에 누구나 커스텀하여 사용할 수 있도록 README를 작성하게 되었습니다.
+<br></br>
 
-- GoogleForm.js 페이지 구성
+## **👐🏻 개발 과정**
 
-  1. form UI 구성 및 제목, 설명 작성 부분 생성
-  2. form 추가, 수정, 삭제 기능 (text, checkbox, radio 순차적으로 진행)
-  3. form 제출 기능 (데이터베이스 저장까지)
-  4. form 질문 스위칭 방식 구상
-  5. 옵션 간의 스위칭 방식 구상
+---
 
-### 7월 7일 (수)
+- 1차 개발 (2021년 7월) : 페이지 및 기능 기획 및 1차 구현
 
-- 유저가 링크를 받아 폼을 작성할 수 있는 GoogleFormUser.js 페이지 구성
+- 2차 개발 (2022년 3월) : README 내용 정리 및 디자인 수정
 
-  1. FormUser UI 구성
-  2. 새로고침 혹은 뒤로가기 이후에 초기화
-  3. form 제출 기능 (데이터베이스 저장까지)
+- 3차 개발 (예정) : 코드 리팩터링
 
-- 유저가 작성한 GoogleForm을 볼 수 있는 FinalGoogleForm.js 페이지 구성
+  <br></br>
 
-  1. GoogleFormUser와 구성은 동일하지만, input이 미리 채워져있다는 것이 다르다.
-  2.
+## **📌 세부 기능**
 
-## 기본 레이아웃 구성
+---
 
-### 1. Home.js
+### 0. **메인 화면**
 
-루트 페이지
+---
 
-    (1) Form을 생성하는 버튼
-    (2) 만들어진 Form list를 확인하는 버튼
+![Home](https://user-images.githubusercontent.com/47960777/156674902-3e95aefe-9110-4f26-87f3-9ddf45a6b91a.png)
 
-### 2. NewGoogleForm.js
+폼을 만드는 버튼과 폼을 불러오는 버튼으로 최소한의 디자인으로 구성되어있습니다.
+<br></br>
 
-작성자가 새로운 폼을 만드는 페이지
+### 1. Form 생성
 
-    (1) 질문지의 제목을 작성할 수 있는 부분
-    (2) 질문지의 질문을 추가, 수정, 삭제할 수 있는 기능
-    (3) 만들어진 폼을 제출하는 기능
-        - 제출하게 되면, 만들어진 것들이 database에 등록이 된다.
-    (4) 질문의 순서도 바꿀 수 있는 기능
-    (5) 옵션들 사이의 버튼을 만들어서 두 개의 옵션 간에 위치를 바꾸는 기능
+---
 
-### 3. GoogleFormUser.js
+![Make Form](https://user-images.githubusercontent.com/47960777/156674922-554d8468-1efa-4e29-8e23-6a25da442f4c.png)
 
-유저들이 링크를 받고 접속하는 페이지
+기본적으로 구글폼과 비슷한 느낌을 유지하려고 했습니다. 원래 폰트는 기본 폰트였지만, 배달의 민족 DOHYEON 체를 사용해보고 싶어서 2차 개발 시 적용해보았습니다.
 
-1. url에서 uid를 읽어 db의 질문을 fetch 해온다.
-2. 질문을 렌더링한다.
+원래 구글폼의 종류는 상당히 다양합니다. 그 중 단답형 질문(텍스트), 체크박스(중복체크), 객관식 질문(단일 선택) 유형으로만 구성을 해보았습니다.
 
-- 유저가 정보를 입력할 수 있어야 한다.
-- 새로고침 되면 정보가 날라가야한다.
-- `제출`을 누르게 되면 유저가 작성한 정보가 db에 저장되어야 한다.
+---
 
-### 4. FinalGoogleForm.js
+**✓ 단답형 질문 폼**
 
-유저들이 작성한 구글폼을 볼 수 있는 페이지
+![text form](https://user-images.githubusercontent.com/47960777/156675081-d8e069f4-b542-4f74-b28b-b1c1ea14abcd.png)
 
-- form 형식은 그대로, input은 채워져있는 상태로 보여야 한다.
-- GoogleFormUser와 거의 비슷하지만, 다른 점은
-  - FinalGoogleForm은 기존에 있는 데이터를 불러오는 역할
-  - GoogleFormUser는 input을 채워넣어야 하는 역할
-- GoogleFormUser와 달리 submit 버튼이 없다.
-- 대신에 수정하기를 누르면, 수정할 수 있게 나타난다.
+---
 
-### 5. GoogleFormReport.js
+**✓ 체크박스 폼**
 
-유저들이 submit 한 기록들을 정리해서 볼 수 있는 부분
+![checkbox form](https://user-images.githubusercontent.com/47960777/156675035-d05606be-1755-488d-a8bb-f9a8535082c8.png)
 
-- 항목 별 퍼센티지
-- 차트
-- 그래프
+---
 
-###
+**✓ 객관식 질문 폼**
 
-## State 구성
+![radio form](https://user-images.githubusercontent.com/47960777/156675060-a1b305cb-c300-4de2-af1e-f8554e91b87f.png)
 
-대략적인 구상은 다음과 같다.
+공통적으로 제목과 설명 입력란, [삭제], [필수 체크] 기능이 존재하며, 우측에 해당 질문의 타입을 변경할 수 있습니다.
 
-(1) tree
+---
 
-     ggfom(collection)
-    -    RandomUUID(docs)
-    -        title (string)
-    -        uid (string)
-     -       Questions(array)
-      -          title
-       -         subtitle
-        -        questionType (checkbox / text / radio)
-         -       uuid
+그리고 각 질문이 포커스 될 때마다 따라오는 옵션바가 있는데, 해당 옵션바를 통해 [질문 추가], [Form 리셋] 을 진행할 수 있습니다.
 
-(2) firebase
+위의 폼들에 대한 form들을 모두 작성한 뒤 작성된 Form을 어떻게 활용하는지 알아보겠습니다.
+<br></br>
 
-![firebase](https://media.vlpt.us/images/peration/post/46fe9f28-6baf-4723-8842-86e92c32218f/image.png)
+### 2. Form 링크 목록
 
-(3) log
+---
 
-```
-[
-   {
-      questionType: "text",
-      title: "구글폼 만들기에 오신 분들을 환영 합니다. 제목을 적어주세요.",
-      subtitle: "설명을 적어주세요",
-      uuid: "125s-1x12f-1cva-1sdf"
-   },
-   {
-      questionType: "checkbox",
-      title: "알고 있는 기술들을 모두 선택해주세요"
-      subtitle: "조금이라도 알면 선택해주세요",
-      uuid: "af12-1ssf2f-d111f-vsdf1"
-      options: [
-         {text: "react", uuid: "1dsf-kjh12-a1nv-wjsdf"},
-         {text: "Node JS", uuid: "2dsf-kjh12-a1nv-wjdsdf"},
-         {text: "GraphQL", uuid: "3dsf-8888-19dn-1jsd3"},
-      ]
-   },
-   {
-      questionType: "radio",
-      title: "제일 잘 알고 있는 기술을 한가지 선택해주세요"
-      subtitle: "only one",
-      uuid: "1f12-1ssf2f-d111f-vsdf1"
-      options: [
-         {text: "react", uuid: "2dsf-kjh12-a1nv-wjsdf"},
-         {text: "Node JS", uuid: "3dsf-kjh12-a1nv-wjdsdf"},
-         {text: "GraphQL", uuid: "4dsf-8888-19dn-1jsd3"},
-      ]
-   }
-]
-```
+Form을 작성했다면, Main 화면에서 보았던 Form 확인 버튼을 눌렀을 때 활성화가 됩니다.
 
-tree를 좀 더 디벨롭해보자면,
+![Form List](https://user-images.githubusercontent.com/47960777/156675654-f8fdb330-3e92-4904-9970-10361c2fecf7.png)
 
-     ggfom(collection)
-    -    RandomUUID(docs)
-    -        uid
-    -        title (string)
-     -       Questions(array)
-      -          title
-       -         subtitle
-        -        questionType (checkbox / text / radio)
-         -       uuid
+첫번째 아이콘부터는 [링크 복사], [링크 바로가기], [응답 보기] 기능으로 이루어져있습니다.
 
-- 작성자가 질문지를 작성할 때마다 GoogleForm 콜렉션에 추가(push)가 된다.
-- 참고로 firebase에 db.collection("GoogleForm").add(Questions) 를 하게 되면 doc의 이름은 유니크한 id로 저장이 되는데, 이 doc 하나하나가 작성자가 생성한 googleForm의 문서 id가 된다.
+---
+
+[응답 보기]는 다음과 같이 Form에 대해 작성된 응답 리스트를 볼 수 있습니다.
+
+## ![Response List](https://user-images.githubusercontent.com/47960777/156680498-780b89ce-ed16-47af-92e9-e44e3b0cb761.png)
+
+우측에 링크 아이콘을 클릭하면 아래와 같이 작성된 응답을 확인할 수 있습니다.
+
+![Response Check Form](https://user-images.githubusercontent.com/47960777/156680548-5904a8ba-8410-4125-bd00-09dc87312fcb.png)
+<br></br>
+
+### 3. Form 화면 및 Form 작성하기
+
+---
+
+Form을 만드는 페이지에서 작성을 완료했다면, 2번에서 이야기한 것처럼, 링크를 통해 내가 만든 Form에 접근할 수 있습니다.
+
+<div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
+	<div>
+		<img src ="https://user-images.githubusercontent.com/47960777/156680397-c5cdc146-c462-41fb-af3f-0e9d05999a4e.png" alt="My Form 1">
+		</div>
+	<div>
+		<img src="https://user-images.githubusercontent.com/47960777/156701577-7819780b-7cc2-4274-8cd1-3f3636528e6c.png" alt="My Form 2">
+	</div>
+</div>
+
+작성 후에 제출 버튼을 클릭하면, 응답이 제출됩니다.
+<br></br>
+
+### 4. Form 작성하기
+
+---
+
+메인 화면에서 Form 별 응답 리스트에서 결과를 확인할 수 있습니다.
+
+![Response 1](https://user-images.githubusercontent.com/47960777/156680548-5904a8ba-8410-4125-bd00-09dc87312fcb.png)
+
+---
+
+## **📌 프로젝트 적용 방법**
+
+---
+
+프로젝트를 어떻게 실행시키는 지에 대해 정리해보았습니다.
+<br></br>
+
+### git clone
+
+---
+
+`npm`이 설치되어있다는 가정 하에 진행하겠습니다.
+
+1. 먼저 해당 프로젝트를 clone 한 뒤, root 위치에서 `npm install`을 진행해줍니다.
 
 ```
-const submit = () => {
-	db
-	  .collection('ggfom')
-	  .add({
-	    uid: uid,
-	    questions: questions,
-			title: title,
-	  })
-	  .then((ref) => {
-	  })
-}
+git clone https://github.com/jeeseongmin/clone-google-form.git
+
+cd clone-google-form
+
+npm install
 ```
 
-- GoogleForm에 add 후 해당 ID를 참조하여
-- 작성자가 질문을 추가하면
+그러면 `node_modules`가 생성되고, 패키지 다운로딩이 진행됩니다.
+
+이후에 `npm start`로 프로젝트가 실행되는 것을 볼 수 있습니다. 하지만 여기까지만 하게되면 화면만 볼 수 있을 뿐, 실제로 Form을 만들고 저장하고 불러오는 것이 동작하지 않습니다.
+<br></br>
+
+### Firebase 정보 가져오기
+
+---
+
+Form 생성, 저장, 열기를 진행하려면 데이터베이스가 반드시 필요합니다.
+
+해당 프로젝트는 `Firebase 데이터베이스인 firestore`를 사용하였습니다.
+
+[src]-[firebase.js] 파일을 보시면 다음과 같습니다.
+
+```
+import firebase from "firebase";
+
+const firebaseApp = firebase.initializeApp({
+	apiKey: process.env.REACT_APP_FIREBASE_KEY,
+	authDomain: process.env.REACT_APP_authDomain,
+	projectId: process.env.REACT_APP_projectId,
+	storageBucket: process.env.REACT_APP_storageBucket,
+	messagingSenderId: process.env.REACT_APP_messagingSenderId,
+	appId: process.env.REACT_APP_appId,
+});
+
+const db = firebaseApp.firestore();
+
+export { db, firebaseApp, firebase };
+
+```
+
+firebase의 정보는 보안상의 이유로 노출되면 안되기 때문에 `.env 파일`에서 가져오게 되어있고, `.env 파일`은 github 상에 업로드 하지 않습니다.
+
+Github에는 .env 파일이 현재 ignore 처리가 되어있지만, `.env 파일`의 위치는 다음과 같습니다.
+
+```
+root
+├── src
+│   └── ...
+├── public
+│   └── ...
+├── ...
+└── .env
+```
+
+위에 보이는 위치에 다음과 같이 .env 파일을 생성하시면 됩니다.
+
+```
+REACT_APP_FIREBASE_KEY = "something"
+REACT_APP_authDomain = "something"
+REACT_APP_projectId = "seomthing"
+REACT_APP_storageBucket = "seomthing"
+REACT_APP_messagingSenderId = "something"
+REACT_APP_appId = "something"
+```
+
+그런데 아직은 제대로 된 정보가 입력되지 않은 상황입니다.
+
+그렇기 때문에 .env 파일의 `"something"`을 채우기 위해 `firebase console`에서 로그인 후 데이터베이스를 생성한 뒤, 정보를 붙여넣으면 됩니다. (firebase 내용은 하단에 작성)
+<br></br>
+
+### Firebase console 이용
+
+---
+
+### 1. Firebase 프로젝트 생성하기
+
+[firebase console](https://console.firebase.google.com/u/0/) 사이트에 로그인하여 접속한 뒤에 Firebase 프로젝트를 생성합니다.
+![firebase console main](https://user-images.githubusercontent.com/47960777/156704537-37e38fea-fd48-4ed1-9334-eb18667879ad.png)
+
+프로젝트 이름, 애널리틱스 체크 안함을 진행하게 되면 하나의 Firebase 프로젝트가 생성됩니다.
+<br></br>
+
+### 2. Firestore Database
+
+프로젝트가 생성되었다면, 웹 추가와 데이터베이스 생성을 진행해줍니다.
+
+**(1) 웹 추가**
+
+아래 화면처럼 메인 화면 중간에 `</>` 로 보이는 웹 아이콘을 클릭해줍니다.
+![웹 추가](https://user-images.githubusercontent.com/47960777/156705082-5417bbe2-8a7f-4e92-8a70-5cb5e39ae116.png)
+
+닉네임은 원하시는 대로 작성 후에, 설정되어있는 그대로 진행해주시면 됩니다.
+
+그러면 다음과 같이 정상적으로 웹 프로젝트가 생성되는 것을 확인할 수 있습니다.
+
+아래 보이는 SDK 설정 및 구성에서 보이는 코드가 위에서 언급한 `firebase.js`의 모양과 같은 것을 볼 수 있습니다.
+
+이제 아래 코드에서 보이는 정보들을 `.env 파일`에 하나씩 옮겨주면 됩니다. (이름이 다를 수 있기 때문에 비슷해 보이는 이름과 매칭해서 적어줍니다.)
+
+주의할 점 : 원래는 이렇게 사진으로도 공개하면 프로젝트를 누구나 접근할 수 있게 됩니다. 해당 프로젝트는 삭제할 예정입니다.
+
+<div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
+<div>
+	<img src ="https://user-images.githubusercontent.com/47960777/156705270-f511790d-9b15-40b7-b8e1-881c00d70438.png" alt="My Form 1">
+	</div>
+<div>
+	<img src="https://user-images.githubusercontent.com/47960777/156705290-95ed8c71-0480-4fe3-87b2-4c53a5008d36.png" alt="My Form 2">
+</div>
+</div>
+
+**(2) Firestore Database 생성**
+
+이제 [Firestore Database]라는 메뉴에서 데이터베이스를 생성해줍니다.
+
+세부 과정은
+
+**(1) Cloud Firestore의 보안 규칙 -> 프로덕션 모드에서 시작**
+
+**(2) Cloud Firestore 위치 설정 -> 그대로 확인 설정**
+
+그러면 Database가 정상적으로 생성되는 것을 볼 수 있습니다.
+
+<div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
+   	<div>
+   		<img src ="https://user-images.githubusercontent.com/47960777/156704689-5f3b173e-7ebc-4409-a99e-cd3892bff83d.png" alt="My Form 1">
+   		</div>
+   	<div>
+   		<img src="https://user-images.githubusercontent.com/47960777/156704942-be85a425-f2fc-4117-b97a-4439a9e89500.png" alt="My Form 2">
+   	</div>
+</div>
+
+[규칙]도 다음과 같이 `false -> true`로 수정해줘야 합니다.
+
+<div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
+   	<div>
+   		<img src ="https://user-images.githubusercontent.com/47960777/156704994-ff3f22fc-a5d5-465f-9d75-69731d8676f7.png" alt="My Form 1">
+   		</div>
+   	<div>
+   		<img src="https://user-images.githubusercontent.com/47960777/156705031-8c52bda8-d5c2-4164-b9eb-79a76c8d87f7.png" alt="My Form 2">
+   	</div>
+</div>
+
+위와 같이 모두 적용했다면, Form이 정상적으로 생성, 저장, 불러오기, 작성하기가 가능해집니다.
+<br></br>
+
+## **2차 개발 코멘트** (2022.03.04)
+
+---
+
+위 프로젝트는 `2021년 여름 Ringle Bootcamp`에서 진행된 과정 가운데 하나입니다.
+
+사실 반년 정도 지난 지금 코드를 돌아봤을 때, 처음 개발을 시작한 사람의 코드처럼 프로젝트의 구조나 섬세함이 떨어지는 것을 확인하고는 부끄럽게 여겨졌습니다.
+
+하지만 웃긴 것은 처음 코드를 작성할 당시에만 해도 구글폼을 비슷하게 구현해본다는 사실 하나만으로 설렜고, 기분이 상당히 좋았다는 것입니다. 그리고는 하나하나 정리해보고 싶다는 결심과는 달리 진행상황을 따라가지 못하는 실력때문에 완성시키지 못한 채로 그 시간을 지나게 되었습니다.
+
+지금와서 프로젝트를 다시 정리해본 이유는 단지 `막연하게 따라가기 벅차다고만 생각했던 코드를 다시 제대로 건드려보았을 때 어떤 기분일지` 가 궁금했기 때문이었습니다.
+
+일단은 코드의 구조나 디테일을 건드리지는 않았지만, 모든 기능이 완벽하게 돌아갈 수 있도록, 그리고 누구나 이 repository를 보고 제 프로젝트의 의도와 기능들을 이해할 수 있도록 `README 파일`을 작성하는 데에 의의를 두었습니다.
+
+당연한 말이지만, 점점 경험이 쌓일 수록 같은 코드를 바라보는 시각이 달라진다는 것을 느낀 순간 굉장히 보람이 있었고 재밌다는 생각이 들었습니다.
+
+다음 3차 개발 때에는 다음 사항들을 도전해볼 예정입니다.
+
+- `구글폼의 다른 기능들을 추가해보기`
+
+- `코드의 구조를 깔끔하게 정리해보기`
+
+그리고 또한 아직 부끄럽게 놓여져있는 다른 Clone project들(Gmail, Calendar) 또한 제대로 정리해볼 예정입니다.
